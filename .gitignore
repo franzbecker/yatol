@@ -1,3 +1,49 @@
+# Created by https://www.gitignore.io/api/gradle,eclipse,java
+
+### Gradle ###
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+
+### Eclipse ###
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# CDT-specific
+.cproject
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# TeXlipse plugin
+.texlipse
+
+
+### Java ###
 *.class
 
 # Mobile Tools for Java (J2ME)
