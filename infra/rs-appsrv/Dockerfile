@@ -5,6 +5,9 @@ RUN apt-get update
 RUN apt-get install -y wget git curl zip
 RUN apt-get install -y openjdk-8-jdk
 
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Set the WILDFLY_VERSION env variable
 ENV WILDFLY_VERSION 9.0.1.Final
 ENV WILDFLY_SHA1 abe037d5d1cb97b4d07fbfe59b6a1345a39a9ae5
@@ -27,3 +30,6 @@ EXPOSE 8080
 # Set the default command to run on boot
 # This will boot WildFly in the standalone mode and bind to all interface
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+
+CMD tail -f /opt/jboss/wildfly/standalone/log/server.log
+
