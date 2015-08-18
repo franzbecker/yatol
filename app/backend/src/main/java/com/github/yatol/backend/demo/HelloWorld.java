@@ -28,6 +28,7 @@ public class HelloWorld {
     @Path("/json")
     @Produces({ "application/json" })
     public String getHelloWorldJSON() {
+    	System.out.println("Got json");
         return "{\"result\":\"" + "Hello World" + "\"}";
     }
 
@@ -35,6 +36,7 @@ public class HelloWorld {
     @Path("/xml")
     @Produces({ "application/xml" })
     public String getHelloWorldXML() {
+    	System.out.println("Got xml");
         return "<xml><result>" + "Hello World" + "</result></xml>";
     }
 
