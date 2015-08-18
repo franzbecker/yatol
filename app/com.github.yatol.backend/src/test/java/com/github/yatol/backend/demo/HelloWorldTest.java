@@ -1,4 +1,4 @@
-package com.github.yatol.backend;
+package com.github.yatol.backend.demo;
 
 public class HelloWorldTest {
 
