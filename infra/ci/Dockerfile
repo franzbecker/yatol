@@ -1,18 +1,32 @@
 FROM ubuntu:15.04
 
 # Install basics
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get install -y wget git curl zip
+RUN apt-get install -y openjdk-8-jdk
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Jenkins
-RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
-RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
-RUN apt-get update && apt-get install -y jenkins
+# see https://github.com/jenkinsci/docker/blob/master/Dockerfile)
+ENV JENKINS_HOME /var/jenkins_home
+ENV JENKINS_VERSION 1.609.2
+ENV JENKINS_SHA 59215da16f9f8a781d185dde683c05fcf11450ef
+VOLUME /var/jenkins_home
+RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN curl -fL http://mirrors.jenkins-ci.org/war-stable/$JENKINS_VERSION/jenkins.war -o /usr/share/jenkins/jenkins.war \
+  && echo "$JENKINS_SHA /usr/share/jenkins/jenkins.war" | sha1sum -c -
 
 EXPOSE 8080
 
-CMD tail -f /var/log/jenkins/jenkins.log
+ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+ENV JENKINS_UC https://updates.jenkins-ci.org
 
+COPY jenkins.sh /usr/local/bin/jenkins.sh
+
+# Handle plugins
+COPY plugins.sh /usr/local/bin/plugins.sh
+COPY plugins.txt /usr/share/jenkins/plugins.txt
+RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+
+ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
