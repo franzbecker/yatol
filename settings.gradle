@@ -2,3 +2,6 @@ rootProject.name = 'com.github.yatol'
 
 include 'backend'
 project(':backend').projectDir = "$rootDir/app/backend" as File
+
+include 'frontend'
+project(':frontend').projectDir = "$rootDir/app/frontend" as File
