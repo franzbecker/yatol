@@ -1,7 +1,8 @@
 FROM ubuntu:14.04
 
 # Install basics
-RUN apt-get update && apt-get install -y wget git curl zip
+RUN apt-get update 
+RUN apt-get install -y wget git curl zip
 
 # Install Jenkins
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
