@@ -8,6 +8,6 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
+    providedCompile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
     testCompile 'junit:junit:4.12'
 }
