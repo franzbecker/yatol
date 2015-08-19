@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://testeditor.org/xsd_schema/v_1_1/AllActionGroups.xsd" schemaVersion="1.1">
-	<ActionGroup id="AllgemeinBrowser" name="AllgemeinBrowser">
+	<ActionGroup name="AllgemeinBrowser">
 		<action technicalBindingType="Navigiere_auf_Seite" />
 		<action technicalBindingType="Beende_Browser" />
 		<action technicalBindingType="Warte_Sekunden" />
@@ -14,7 +14,7 @@
 			<actionName locator="IE">ieHandle</actionName>
 		</action>
 	</ActionGroup>
-	<ActionGroup id="Login" name="Login">
+	<ActionGroup name="Login">
 		<action technicalBindingType="Eingabe_Wert">
 			<actionName locator="webid::username">username</actionName>
 		</action>
