@@ -2,8 +2,44 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integration-test/java')
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
     providedCompile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
     testCompile 'junit:junit:4.12'
+    testCompile 'com.google.truth:truth:0.27'
+    testCompile 'com.sun.jersey:jersey-bundle:1.19'
+
+    // Configure integrationTest
+	integrationTestCompile sourceSets.main.output
+	integrationTestCompile sourceSets.test.output
+	integrationTestCompile configurations.testCompile
+	integrationTestRuntime configurations.testRuntime
+}
+
+task integrationTest(type: Test, dependsOn: testClasses) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+task integrationTestDocker(type: Test) {
+    dependsOn testClasses, ':app-server:startAppContainer'
+    doFirst {
+      println "Doing some primitive waiting for Docker + JBoss"
+      sleep(15000)
+      println "Done waiting. Executing integration tests."
+    }
+    doLast {
+      println "Finished integration tests."
+    }
+    outputs.upToDateWhen { false }
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    finalizedBy ':app-server:stopAppContainer'
 }

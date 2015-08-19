@@ -57,6 +57,10 @@ task startAppContainer(type: DockerStartContainer) {
     targetContainerId { createAppContainer.getContainerId() }
 }
 
+task stopAppContainer(type: DockerStopContainer) {
+    targetContainerId { createAppContainer.getContainerId() }
+}
+
 task createContainer(type: DockerCreateContainer) {
     dependsOn buildAppServerImage
     targetImageId { buildImage.getImageId() }
@@ -72,7 +76,7 @@ task stopContainer(type: DockerStopContainer) {
     targetContainerId { createContainer.getContainerId() }
 }
 
-task functionalTestMyApp(type: Test) {
-    dependsOn startContainer
-    finalizedBy stopContainer
+task functionalTestMyApp {
+    dependsOn startAppContainer, ':backend:integrationTest'
+    finalizedBy stopAppContainer
 }
