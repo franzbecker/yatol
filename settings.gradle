@@ -5,3 +5,6 @@ project(':backend').projectDir = "$rootDir/app/backend" as File
 
 include 'frontend'
 project(':frontend').projectDir = "$rootDir/app/frontend" as File
+
+include 'app-server'
+project(':app-server').projectDir = "$rootDir/infra/app-server" as File
