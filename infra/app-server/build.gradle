@@ -6,9 +6,73 @@ buildscript {
 
 apply plugin: 'com.bmuschko.docker-remote-api'
 
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.image.*
 
-task buildImage(type: DockerBuildImage) {
+/*
+ * Builds the "base" image which includes a plain JBoss.
+ */
+task buildAppServerImage(type: DockerBuildImage) {
     dockerFile = project.file('Dockerfile')
     inputDir = dockerFile.parentFile
+    tag = 'yatol/app-server'
+}
+
+/*
+ * Copies the war files into the folder from which the Docker image
+ * shall be built.
+ */
+task copyWars(type: Copy) {
+    dependsOn ':backend:war', ':frontend:war'
+    from project(':backend').file('build/libs/backend.war')
+    from project(':frontend').file('build/libs/frontend.war')
+    into project.file('build/app')
+}
+
+/*
+ * Create a Docker file that includes the frontend and backend wars.
+ */
+task createAppDockerfile(type: Dockerfile) {
+    dependsOn buildAppServerImage, copyWars
+    destFile = project.file('build/app/Dockerfile')
+
+    from 'yatol/app-server'
+    copyFile('backend.war', '/opt/jboss/wildfly/standalone/deployments/backend.war')
+    copyFile('frontend.war', '/opt/jboss/wildfly/standalone/deployments/frontend.war')
+}
+
+task buildAppImage(type: DockerBuildImage, dependsOn: createAppDockerfile) {
+    inputDir = createAppDockerfile.destFile.parentFile
+    tag = 'yatol/app'
+}
+
+task createAppContainer(type: DockerCreateContainer) {
+    dependsOn buildAppImage
+    targetImageId { buildAppImage.getImageId() }
+    portBindings = ['8080:8080']
+}
+
+task startAppContainer(type: DockerStartContainer) {
+    dependsOn createAppContainer
+    targetContainerId { createAppContainer.getContainerId() }
+}
+
+task createContainer(type: DockerCreateContainer) {
+    dependsOn buildAppServerImage
+    targetImageId { buildImage.getImageId() }
+    portBindings = ['8080:8080']
+}
+
+task startContainer(type: DockerStartContainer) {
+    dependsOn createContainer
+    targetContainerId { createContainer.getContainerId() }
+}
+
+task stopContainer(type: DockerStopContainer) {
+    targetContainerId { createContainer.getContainerId() }
+}
+
+task functionalTestMyApp(type: Test) {
+    dependsOn startContainer
+    finalizedBy stopContainer
 }
