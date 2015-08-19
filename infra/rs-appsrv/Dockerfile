@@ -20,16 +20,13 @@ RUN cd $HOME \
     && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
     && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
     && mkdir -p $JBOSS_HOME \
-    && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
+    && mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME \
     && rm wildfly-$WILDFLY_VERSION.tar.gz
 
 # Expose the ports we're interested in
 EXPOSE 8080
 #EXPOSE 9990
 
-# Set the default command to run on boot
-# This will boot WildFly in the standalone mode and bind to all interface
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+COPY startServer.sh /opt/jboss/wildfly/startServer.sh
 
-CMD tail -f /opt/jboss/wildfly/standalone/log/server.log
-
+ENTRYPOINT ["/opt/jboss/wildfly/startServer.sh"]
