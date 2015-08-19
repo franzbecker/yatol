@@ -1,0 +1,5 @@
+!1 YatolTests
+
+
+
+!note Release ${FITNESSE_VERSION}
