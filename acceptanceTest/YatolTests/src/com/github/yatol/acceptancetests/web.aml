@@ -1,0 +1,186 @@
+package com.github.yatol.acceptancetests
+
+generate technicalBindings "TechnicalBindingTypeCollection.xml"
+
+element type BrowserHandle {
+	interactions = Starte_Browser
+}
+
+element type Text {
+	interactions = Eingabe_Wert, Pruefe_Text_Vorhanden, Leere_Wert
+}
+
+interaction type Pruefe_Text_Nicht_In_Element {
+	label = "Ist Text am Element nicht vorhanden"
+	template = "überprüfe ob am Element" ${element} "der Text" ${} "nicht vorhanden ist"
+}
+
+interaction type Auswahl_Wert {
+	label = "Wert auswählen"
+	template = "wähle aus der Combobox" ${element} "den Wert" ${} "aus"
+}
+
+interaction type Starte_Browser {
+	label = "Browser starten"
+	template = "starte Browser" ${element}
+}
+
+interaction type Beende_Browser {
+	label = "Browser beenden"
+	template = "beende Browser"
+}
+
+interaction type Navigiere_auf_Seite {
+	label = "Seite navigieren"
+	template = "navigiere auf die Seite" ${}
+}
+
+interaction type Wert_Ist_Leer {
+	label = "Ist Wert leer"
+	template = "ist der Wert" ${} "leer"
+}
+
+interaction type Werte_Sind_Gleich {
+	label = "Sind die Werte gleich"
+	template = "sind die Werte" ${wert1} "und" ${wert2} "gleich"
+}
+
+interaction type Warte_Sekunden {
+	label = "Sekunden warten"
+	template = "warte" ${} "Sekunden"
+}
+
+interaction type Wechsel_Fenster {
+	label = "Fenster wechseln"
+	template = "wechsel zum Fenster" ${element}
+}
+
+interaction type Klicke_Element {
+	label = "Element klicken"
+	template = "klicke auf" ${element}
+}
+
+interaction type Leere_Wert {
+	label = "Wert leeren"
+	template = "leere das Feld" ${element}
+}
+
+interaction type Lese_Wert {
+	label = "Wert auslesen"
+	template = "lese aus dem Element" ${element} "den Wert aus"
+}
+
+interaction type Pruefe_Wert_In_Element {
+	label = "Besitzt das Element den Wert"
+	template = "überprüfe ob das Element" ${element} "den Wert" ${} "besitzt"
+}
+
+interaction type Lese_Attribut {
+	label = "Attribut auslesen"
+	template = "lese aus dem Element" ${element} "das Attribut" ${} "aus"
+}
+
+interaction type Selektiere_Wert {
+	label = "Wert selektieren"
+	template = "selektiere am Element" ${element} "den Wert" ${}
+}
+
+interaction type Pruefe_Wert_Selektiert {
+	label = "überprüfe ob selektiert"
+	template = "überprüfe ob das Element" ${element} "selektiert ist"
+}
+
+interaction type Pruefe_Wert_Nicht_Selektiert {
+	label = "überprüfe ob nicht selektiert"
+	template = "überprüfe ob das Element" ${element} "nicht selektiert ist"
+}
+
+interaction type Eingabe_Wert {
+	label = "Wert eingeben"
+	template = "gebe in das Feld" ${element} "den Wert" ${} "ein"
+}
+
+interaction type Klicke_Element_Doppelt {
+	label = "Element doppelt klicken"
+	template = "klicke doppelt auf" ${element}
+}
+
+interaction type Pruefe_Text_Vorhanden {
+	label = "Ist Text vorhanden"
+	template = "überprüfe ob der Text" ${} "vorhanden ist"
+}
+
+interaction type Pruefe_Text_Nicht_Vorhanden {
+	label = "Ist Text nicht vorhanden"
+	template = "überprüfe ob der Text" ${} "nicht vorhanden ist"
+}
+
+interaction type Bewege_Maus {
+	label = "Maus bewegen"
+	template = "bewege Maus zum Element" ${element}
+}
+
+interaction type Pruefe_Element_Inaktiv {
+	label = "Ist Element inaktiv"
+	template = "überprüfe ob das Element" ${element} "inaktiv ist"
+}
+
+interaction type Pruefe_Element_Aktiv {
+	label = "Ist Element aktiv"
+	template = "überprüfe ob das Element" ${element} "aktiv ist"
+}
+
+interaction type Pruefe_Element_Nicht_Vorhanden {
+	label = "Ist Element nicht vorhanden"
+	template = "überprüfe ob das Element" ${element} "nicht vorhanden ist"
+}
+
+interaction type Pruefe_Element_Vorhanden {
+	label = "Ist Element vorhanden"
+	template = "überprüfe ob das Element" ${element} "vorhanden ist"
+}
+
+interaction type Werte_Sind_Nicht_Gleich {
+	label = "Sind die Werte ungleich"
+	template = "sind die Werte" ${wert1} "und" ${wert2} "ungleich"
+}
+
+interaction type Wert_Ist_Nicht_Leer {
+	label = "Ist Wert nicht leer"
+	template = "ist der Wert" ${} "nicht leer"
+}
+
+interaction type Wert_Nicht_Enthalten {
+	label = "Ist Wert nicht enthalten"
+	template = "ist Wert" ${wert} "in" ${text} "nicht enthalten"
+}
+
+interaction type Wert_Enthalten {
+	label = "Ist Wert enthalten"
+	template = "ist Wert" ${wert} "in" ${text} "enthalten"
+}
+
+interaction type Pruefe_Text_In_Element {
+	label = "Ist Text am Element vorhanden"
+	template = "überprüfe ob am Element" ${element} "der Text" ${} "vorhanden ist"
+}
+
+interaction type Taste_Druecken {
+	label = "Drücke Taste"
+	template = "die Taste" ${} "drücken"
+}
+
+interaction type Taste_Druecken_Am_Element {
+	label = "Drücke Taste am Element"
+	template = "am Element" ${element} "die Taste" ${} "drücken"
+}
+
+interaction type Testausfuehrung_Beenden {
+	label = "Beende Testausführung"
+	template = "beende die Testausführung"
+}
+
+interaction type Seitenaufbau_Abwarten {
+	label = "Seitenaufbau abwarten"
+	template = "vollständigen Seitenaufbau abwarten"
+}

@@ -1,0 +1,27 @@
+package com.github.yatol.acceptancetests
+
+generate allActionGroups "AllActionGroups.xml"
+
+component type BrowserCP {
+	interactions = Navigiere_auf_Seite, Beende_Browser, Warte_Sekunden, Pruefe_Text_Vorhanden, Pruefe_Text_Nicht_Vorhanden, Seitenaufbau_Abwarten
+}
+component type page
+
+component AllgemeinBrowser is BrowserCP {
+	element firefoxHandle is BrowserHandle {
+		label = "Firefox"
+		locator = "Firefox"
+	}
+	element ieHandle is BrowserHandle {
+		label = "IE"
+		locator = "IE"
+	}
+}
+
+component Login is page {
+	element username is Text {
+		locator = "webid::username"
+	}
+}
+
+//value-space browserTypes = #[ "IE", "Firefox" ]

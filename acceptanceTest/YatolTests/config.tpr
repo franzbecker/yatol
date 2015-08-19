@@ -26,4 +26,10 @@ testautomat.serverid=fitnesse_based_1.2
 # synchronization (team sharing e.g. via SVN)
 ####################################################################
 
-teamshare_plugin_id=
+teamshare_plugin_id=svn-team-share
+teamshare.svn.url=https://github.com/yatol/yatol/trunk/acceptanceTest
+
+
+
+test.execution.environment.config=vagrant/linux
+#test.execution.environment.config=vagrant/windows
