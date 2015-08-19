@@ -1,0 +1,29 @@
+###################################################################
+# Test-Editor project configuration                               #
+# —--------------------------------                               #
+#                                                                 #
+# Config file for the local settings of each Test-Editor project. #
+# You may edit this file directly or via the Test-Editor’s UI.    #
+###################################################################
+
+tpr-version=1.4
+
+
+# library (project specific meta data for any test case)
+###################################################################
+
+library_id=org.testeditor.xmllibrary
+library.xmllibrary.actiongroup=YatolTests/AllActionGroups.xml
+library.xmllibrary.technicalbindings=YatolTests/TechnicalBindingTypeCollection.xml
+
+
+# testautomat (FitNesse server settings)
+####################################################################
+
+testautomat.serverid=fitnesse_based_1.2
+
+
+# synchronization (team sharing e.g. via SVN)
+####################################################################
+
+teamshare_plugin_id=
