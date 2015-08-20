@@ -46,4 +46,8 @@ RUN chmod +x /usr/local/bin/wrapdocker
 VOLUME /var/lib/docker
 CMD ["wrapdocker"]
 
+# Explicitly configure gradle to not use the gradle daemon
+RUN mkdir ~/.gradle/ -p && touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+COPY jenkins_home $JENKINS_HOME
+
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
