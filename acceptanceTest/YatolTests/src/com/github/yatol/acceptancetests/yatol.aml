@@ -3,7 +3,7 @@ package com.github.yatol.acceptancetests
 generate allActionGroups "AllActionGroups.xml"
 
 component type BrowserCP {
-	interactions = Navigiere_auf_Seite, Beende_Browser, Warte_Sekunden, Pruefe_Text_Vorhanden, Pruefe_Text_Nicht_Vorhanden, Seitenaufbau_Abwarten
+	interactions = Navigiere_auf_Seite, Navigiere_auf_Host_Seite, Beende_Browser, Warte_Sekunden, Pruefe_Text_Vorhanden, Pruefe_Text_Nicht_Vorhanden, Seitenaufbau_Abwarten
 }
 component type page
 

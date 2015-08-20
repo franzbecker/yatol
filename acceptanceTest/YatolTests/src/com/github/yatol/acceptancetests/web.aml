@@ -35,6 +35,11 @@ interaction type Navigiere_auf_Seite {
 	template = "navigiere auf die Seite" ${}
 }
 
+interaction type Navigiere_auf_Host_Seite {
+	label = "Host Seite navigieren"
+	template = "navigiere auf die host Seite" ${}
+}
+
 interaction type Wert_Ist_Leer {
 	label = "Ist Wert leer"
 	template = "ist der Wert" ${} "leer"

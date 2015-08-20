@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.testeditor.fixture.web;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
@@ -19,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -213,6 +219,19 @@ public abstract class AbstractWebFixture implements StoppableFixture, Fixture {
 	public boolean navigateToUrl(String url) {
 		webDriver.get(url);
 		return true;
+	}
+
+	public boolean serviceAnswerContains(String url, String content) {
+//		 HttpClient client = new DefaultHttpClient();
+//		 	  HttpGet request = new HttpGet(url);
+//		 	  HttpResponse response = client.execute(request);
+//		 	  BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
+//		 	  String line = "";
+//		 	  StringBuffer bu = new StringBuffer();
+//		 	  while ((line = rd.readLine()) != null) {
+//		 	    bu.append(line).append("\n");
+//		 	  }		
+		 	  return true;
 	}
 
 	/**

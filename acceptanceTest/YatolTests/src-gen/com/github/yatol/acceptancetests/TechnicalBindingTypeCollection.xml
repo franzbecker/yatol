@@ -25,6 +25,10 @@
 		<actionPart position="1" type="TEXT" value="navigiere auf die Seite" />
 		<actionPart position="2" type="ARGUMENT" />
 	</TechnicalBindingType>
+	<TechnicalBindingType id="Navigiere_auf_Host_Seite" name="Host Seite navigieren">
+		<actionPart position="1" type="TEXT" value="navigiere auf die host Seite" />
+		<actionPart position="2" type="ARGUMENT" />
+	</TechnicalBindingType>
 	<TechnicalBindingType id="Wert_Ist_Leer" name="Ist Wert leer">
 		<actionPart position="1" type="TEXT" value="ist der Wert" />
 		<actionPart position="2" type="ARGUMENT" />
