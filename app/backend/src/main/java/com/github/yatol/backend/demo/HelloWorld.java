@@ -16,28 +16,44 @@
  */
 package com.github.yatol.backend.demo;
 
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import com.github.yatol.backend.entities.User;
+
 @Path("/")
+@Stateless
 public class HelloWorld {
 
+	@PersistenceContext(unitName = "yatol")
+	private EntityManager em;
 
-    @GET
-    @Path("/json")
-    @Produces({ "application/json" })
-    public String getHelloWorldJSON() {
-    	System.out.println("Got json");
-        return "{\"result\":\"" + "Hello World" + "\"}";
-    }
+	@GET
+	@Path("/json")
+	@Produces({ "application/json" })
+	public String getHelloWorldJSON() {
+		System.out.println("Got json");
 
-    @GET
-    @Path("/xml")
-    @Produces({ "application/xml" })
-    public String getHelloWorldXML() {
-    	System.out.println("Got xml");
-        return "<xml><result>" + "Hello World" + "</result></xml>";
-    }
+		User user = new User();
+		user.setUsername("Hugo");
 
+		em.persist(user);
+
+		System.err.println("User-toString: " + user.getId());
+
+		return "{\"result\":\"" + "Hello World" + "\"}";
+	}
+
+	@GET
+	@Path("/xml")
+	@Produces({ "application/xml" })
+	public String getHelloWorldXML() {
+		System.out.println("Got xml");
+		return "<xml><result>" + "Hello World" + "</result></xml>";
+	}
 }

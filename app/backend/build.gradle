@@ -11,7 +11,9 @@ sourceSets {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
     providedCompile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
+    providedCompile 'org.projectlombok:lombok:1.16.6'
     testCompile 'junit:junit:4.12'
     testCompile 'com.google.truth:truth:0.27'
     testCompile 'com.sun.jersey:jersey-bundle:1.19'
@@ -21,6 +23,15 @@ dependencies {
 	integrationTestCompile sourceSets.test.output
 	integrationTestCompile configurations.testCompile
 	integrationTestRuntime configurations.testRuntime
+}
+
+task installLombok(type: Copy) {
+    def File lombok = configurations.providedCompile.find {
+        def File file = it
+        return file.name.startsWith("lombok")
+    }
+    from lombok
+    into 'lib'
 }
 
 task integrationTest(type: Test, dependsOn: testClasses) {
