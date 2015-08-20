@@ -1,4 +1,5 @@
 # Maske: AllgemeinBrowser
 -!|script|
 |starte Browser|Firefox|
-|warte|10|Sekunden|
+|warte|3|Sekunden|
+|beende Browser|
