@@ -64,3 +64,7 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+
+### Vagrant ###
+.vagrant/
