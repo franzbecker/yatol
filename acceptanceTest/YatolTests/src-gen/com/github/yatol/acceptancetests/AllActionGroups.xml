@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://testeditor.org/xsd_schema/v_1_1/AllActionGroups.xsd" schemaVersion="1.1">
+	<ActionGroup id="AllgemeinBrowser" name="AllgemeinBrowser">
+		<action technicalBindingType="Navigiere_auf_Seite" />
+		<action technicalBindingType="Beende_Browser" />
+		<action technicalBindingType="Warte_Sekunden" />
+		<action technicalBindingType="Pruefe_Text_Vorhanden" />
+		<action technicalBindingType="Pruefe_Text_Nicht_Vorhanden" />
+		<action technicalBindingType="Seitenaufbau_Abwarten" />
+		<action technicalBindingType="Starte_Browser">
+			<actionName locator="Firefox">firefoxHandle</actionName>
+		</action>
+		<action technicalBindingType="Starte_Browser">
+			<actionName locator="IE">ieHandle</actionName>
+		</action>
+	</ActionGroup>
+	<ActionGroup id="Login" name="Login">
+		<action technicalBindingType="Eingabe_Wert">
+			<actionName locator="webid::username">username</actionName>
+		</action>
+		<action technicalBindingType="Pruefe_Text_Vorhanden">
+			<actionName locator="webid::username">username</actionName>
+		</action>
+		<action technicalBindingType="Leere_Wert">
+			<actionName locator="webid::username">username</actionName>
+		</action>
+	</ActionGroup>
+	<ActionGroup id="Registration" name="Registration">
+		<action technicalBindingType="Taste_Druecken">
+			<actionName locator="webid::registration">registration</actionName>
+		</action>
+	</ActionGroup>
+</ActionGroups>
