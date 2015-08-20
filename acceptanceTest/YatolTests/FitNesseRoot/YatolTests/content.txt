@@ -3,8 +3,8 @@
 !define TIMEOUT {10000}
 !define TEST_SYSTEM {slim}
 
-!path ${FIXTURE_LIB_BUNDLE_PATH}/fixture/web-fixture*.jar
-!path ${FIXTURE_LIB_BUNDLE_PATH}/lib/*.jar
+!path ${YATOL_FIXTURE_LIB_BUNDLE_PATH}/web-fixture*.jar
+!path ${YATOL_FIXTURE_LIB_BUNDLE_PATH}/libs/*.jar
 
 !define BROWSER_PATH {${path.browser}}
 

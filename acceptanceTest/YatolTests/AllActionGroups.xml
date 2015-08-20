@@ -8,10 +8,10 @@
 		<action technicalBindingType="Pruefe_Text_Nicht_Vorhanden" />
 		<action technicalBindingType="Seitenaufbau_Abwarten" />
 		<action technicalBindingType="Starte_Browser">
-			<actionName locator="Firefox">firefoxHandle</actionName>
+			<actionName locator="Firefox">Firefox</actionName>
 		</action>
 		<action technicalBindingType="Starte_Browser">
-			<actionName locator="IE">ieHandle</actionName>
+			<actionName locator="IE">IE</actionName>
 		</action>
 	</ActionGroup>
 	<ActionGroup name="Login">
