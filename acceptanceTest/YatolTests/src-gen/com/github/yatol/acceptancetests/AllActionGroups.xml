@@ -25,9 +25,4 @@
 			<actionName locator="webid::username">username</actionName>
 		</action>
 	</ActionGroup>
-	<ActionGroup id="Registration" name="Registration">
-		<action technicalBindingType="Taste_Druecken">
-			<actionName locator="webid::registration">registration</actionName>
-		</action>
-	</ActionGroup>
 </ActionGroups>
