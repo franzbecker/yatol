@@ -25,9 +25,11 @@
 		<actionPart position="1" type="TEXT" value="navigiere auf die Seite" />
 		<actionPart position="2" type="ARGUMENT" />
 	</TechnicalBindingType>
-	<TechnicalBindingType id="Navigiere_auf_Host_Seite" name="Host Seite navigieren">
-		<actionPart position="1" type="TEXT" value="navigiere auf die host Seite" />
-		<actionPart position="2" type="ARGUMENT" />
+	<TechnicalBindingType id="service_antwort_enthaelt" name="Service Antwort enthält">
+		<actionPart position="1" type="TEXT" value="antwortet der service" />
+		<actionPart position="2" type="ARGUMENT" id="url" />
+		<actionPart position="3" type="TEXT" value="mit " />
+		<actionPart position="4" type="ARGUMENT" />
 	</TechnicalBindingType>
 	<TechnicalBindingType id="Wert_Ist_Leer" name="Ist Wert leer">
 		<actionPart position="1" type="TEXT" value="ist der Wert" />

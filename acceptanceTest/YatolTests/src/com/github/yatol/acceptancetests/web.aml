@@ -10,6 +10,10 @@ element type Text {
 	interactions = Eingabe_Wert, Pruefe_Text_Vorhanden, Leere_Wert
 }
 
+element type service {
+	interactions = service_antwort_enthaelt
+}
+
 interaction type Pruefe_Text_Nicht_In_Element {
 	label = "Ist Text am Element nicht vorhanden"
 	template = "überprüfe ob am Element" ${element} "der Text" ${} "nicht vorhanden ist"
@@ -35,9 +39,9 @@ interaction type Navigiere_auf_Seite {
 	template = "navigiere auf die Seite" ${}
 }
 
-interaction type Navigiere_auf_Host_Seite {
-	label = "Host Seite navigieren"
-	template = "navigiere auf die host Seite" ${}
+interaction type service_antwort_enthaelt {
+	label = "Service Antwort enthält"
+	template = "antwortet der service" ${url} "mit " ${}
 }
 
 interaction type Wert_Ist_Leer {

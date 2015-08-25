@@ -3,9 +3,11 @@ package com.github.yatol.acceptancetests
 generate allActionGroups "AllActionGroups.xml"
 
 component type BrowserCP {
-	interactions = Navigiere_auf_Seite, Navigiere_auf_Host_Seite, Beende_Browser, Warte_Sekunden, Pruefe_Text_Vorhanden, Pruefe_Text_Nicht_Vorhanden, Seitenaufbau_Abwarten
+	interactions = Navigiere_auf_Seite, Beende_Browser, Warte_Sekunden, Pruefe_Text_Vorhanden, Pruefe_Text_Nicht_Vorhanden, Seitenaufbau_Abwarten
 }
 component type page
+
+component type services
 
 component AllgemeinBrowser is BrowserCP {
 	element firefoxHandle is BrowserHandle {
@@ -21,6 +23,13 @@ component AllgemeinBrowser is BrowserCP {
 component Login is page {
 	element username is Text {
 		locator = "webid::username"
+	}
+}
+
+component helloworldservice is services {
+	element helloworld is service {
+		label = "JSon "
+		locator = "http://10.0.2.2:8080/backend/json"
 	}
 }
 

@@ -29,5 +29,5 @@ testautomat.serverid=fitnesse_based_1.2
 teamshare_plugin_id=
 
 
-#test.execution.environment.config=vagrant/linux
-test.execution.environment.config=vagrant/windows
+test.execution.environment.config=vagrant/linux
+#test.execution.environment.config=vagrant/windows

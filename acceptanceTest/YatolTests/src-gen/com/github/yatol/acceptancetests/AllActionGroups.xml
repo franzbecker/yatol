@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://testeditor.org/xsd_schema/v_1_1/AllActionGroups.xsd" schemaVersion="1.1">
-	<ActionGroup  name="AllgemeinBrowser">
+	<ActionGroup name="AllgemeinBrowser">
 		<action technicalBindingType="Navigiere_auf_Seite" />
-		<action technicalBindingType="Navigiere_auf_Host_Seite" />
 		<action technicalBindingType="Beende_Browser" />
 		<action technicalBindingType="Warte_Sekunden" />
 		<action technicalBindingType="Pruefe_Text_Vorhanden" />
@@ -24,6 +23,11 @@
 		</action>
 		<action technicalBindingType="Leere_Wert">
 			<actionName locator="webid::username">username</actionName>
+		</action>
+	</ActionGroup>
+	<ActionGroup name="helloworldservice">
+		<action technicalBindingType="service_antwort_enthaelt">
+			<actionName locator="http://10.0.2.2:8080/backend/json">JSon </actionName>
 		</action>
 	</ActionGroup>
 </ActionGroups>

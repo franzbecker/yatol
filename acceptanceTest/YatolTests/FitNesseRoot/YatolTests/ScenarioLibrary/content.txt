@@ -48,9 +48,9 @@
 !|scenario|navigiere auf die Seite|url|
 |navigateToUrl;|@url|
 
-'''AbstractWebFixture - Seite navigieren (Navigiere_auf_Seite)'''
-!|scenario|navigiere auf die host Seite|url|
-|navigateToUrlOnHost;|@url|
+'''AbstractWebFixture - Prüfe Servicee Antwort'''
+!|scenario|antwortet der service|url|mit|content|
+|serviceAnswerContains;|@url|@content|
 
 '''AbstractWebFixture - Ist Wert leer (Wert_Ist_Leer)'''
 !|scenario|ist der Wert|text|leer|
