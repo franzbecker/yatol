@@ -1,0 +1,9 @@
+buildscript {
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:2.5.2'
+    }
+}
+
+subprojects {
+    apply plugin: 'com.bmuschko.docker-remote-api'
+}

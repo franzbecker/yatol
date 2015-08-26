@@ -40,7 +40,7 @@ task integrationTest(type: Test, dependsOn: testClasses) {
 }
 
 task integrationTestDocker(type: Test) {
-    dependsOn testClasses, ':app-server:startAppContainer'
+    dependsOn testClasses, ':infra:app-server:startAppContainer'
     doFirst {
       println "Doing some primitive waiting for Docker + JBoss"
       sleep(15000)
