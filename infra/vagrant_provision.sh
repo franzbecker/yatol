@@ -1,40 +1,59 @@
 function dockerInstall() {
-	# Taken from https://get.docker.com/ubuntu/
-	# Check that HTTPS transport is available to APT
-	if [ ! -e /usr/lib/apt/methods/https ]; then
-		apt-get install -y apt-transport-https
+	if [ ! -f /usr/bin/docker ]; then
+		# Taken from https://get.docker.com/ubuntu/
+		# Check that HTTPS transport is available to APT
+		if [ ! -e /usr/lib/apt/methods/https ]; then
+			apt-get install -y apt-transport-https
+		fi
+
+		# Add the repository to your APT sources
+		echo deb https://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+
+		# Then import the repository key
+		apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+
+		# Install docker
+		apt-get update -qq
+		apt-get install -qqy lxc-docker
+	else
+		echo " > Docker already installed"
 	fi
-
-	# Add the repository to your APT sources
-	echo deb https://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-
-	# Then import the repository key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-
-	# Install docker
-	apt-get update -qq
-	apt-get install -qqy lxc-docker
 }
 
 function dockerEnableRemoteApi() {
-	# Taken from https://coreos.com/os/docs/latest/customizing-docker.html
-	## TODO: can we make this echo stuff nicer?
-	touch /etc/systemd/system/docker-tcp.socket
-	echo "[Unit]" > /etc/systemd/system/docker-tcp.socket
-	echo "Description=Docker Socket for the API" >> /etc/systemd/system/docker-tcp.socket
-	echo "" >> /etc/systemd/system/docker-tcp.socket
-	echo "[Socket]" >> /etc/systemd/system/docker-tcp.socket
-	echo "ListenStream=2375" >> /etc/systemd/system/docker-tcp.socket
-	echo "BindIPv6Only=both" >> /etc/systemd/system/docker-tcp.socket
-	echo "Service=docker.service" >> /etc/systemd/system/docker-tcp.socket
-	echo "" >> /etc/systemd/system/docker-tcp.socket
-	echo "[Install]" >> /etc/systemd/system/docker-tcp.socket
-	echo "WantedBy=sockets.target" >> /etc/systemd/system/docker-tcp.socket
+	if [ ! -f /etc/systemd/system/docker-tcp.socket ]; then
+		# Taken from https://coreos.com/os/docs/latest/customizing-docker.html
+		## TODO: can we make this echo stuff nicer?
+		touch /etc/systemd/system/docker-tcp.socket
+		echo "[Unit]" > /etc/systemd/system/docker-tcp.socket
+		echo "Description=Docker Socket for the API" >> /etc/systemd/system/docker-tcp.socket
+		echo "" >> /etc/systemd/system/docker-tcp.socket
+		echo "[Socket]" >> /etc/systemd/system/docker-tcp.socket
+		echo "ListenStream=2375" >> /etc/systemd/system/docker-tcp.socket
+		echo "BindIPv6Only=both" >> /etc/systemd/system/docker-tcp.socket
+		echo "Service=docker.service" >> /etc/systemd/system/docker-tcp.socket
+		echo "" >> /etc/systemd/system/docker-tcp.socket
+		echo "[Install]" >> /etc/systemd/system/docker-tcp.socket
+		echo "WantedBy=sockets.target" >> /etc/systemd/system/docker-tcp.socket
 
-	service docker stop
-	systemctl enable docker-tcp.socket
-	systemctl start docker-tcp.socket
-	systemctl start docker
+		service docker stop
+		systemctl enable docker-tcp.socket
+		systemctl start docker-tcp.socket
+		systemctl start docker
+	else
+		echo " > Docker remote API already enabled"
+	fi
+}
+
+function gradleEnableDaemon() {
+	if [ ! -f ~/.gradle/gradle.properties ]; then
+		if [ ! -e ~/.gradle]; then
+			mkdir ~/.gradle
+		fi
+		touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+	else
+		echo " > gradle.properties already exists, no changes were made to it"
+	fi
 }
 
 echo "Provisioning virtual machine..."
@@ -54,5 +73,5 @@ dockerInstall
 echo "Enabling Docker remote API"
 dockerEnableRemoteApi
 
-echo "Explicitly disable Gradle daemon"
-touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+echo "Enable Gradle daemon"
+gradleEnableDaemon
