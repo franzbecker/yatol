@@ -36,6 +36,8 @@ function dockerEnableRemoteApi() {
 		echo "[Install]" >> /etc/systemd/system/docker-tcp.socket
 		echo "WantedBy=sockets.target" >> /etc/systemd/system/docker-tcp.socket
 
+		echo 'DOCKER_HOST="tcp://localhost:2375"' >> /etc/environment
+
 		service docker stop
 		systemctl enable docker-tcp.socket
 		systemctl start docker-tcp.socket
