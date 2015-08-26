@@ -41,7 +41,7 @@ task buildAppImage(type: DockerBuildImage, dependsOn: createAppDockerfile) {
 task createAppContainer(type: DockerCreateContainer) {
     dependsOn buildAppImage
     targetImageId { buildAppImage.getImageId() }
-    portBindings = ['8080:8080']
+    portBindings = ['8081:8081']
 }
 
 task startAppContainer(type: DockerStartContainer) {

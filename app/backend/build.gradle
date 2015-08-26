@@ -52,5 +52,5 @@ task integrationTestDocker(type: Test) {
     outputs.upToDateWhen { false }
     testClassesDir = sourceSets.integrationTest.output.classesDir
     classpath = sourceSets.integrationTest.runtimeClasspath
-    finalizedBy ':app-server:stopAppContainer'
+    finalizedBy ':infra:app-server:stopAppContainer'
 }
