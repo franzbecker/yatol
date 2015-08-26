@@ -47,7 +47,7 @@ function dockerEnableRemoteApi() {
 
 function gradleEnableDaemon() {
 	if [ ! -f ~/.gradle/gradle.properties ]; then
-		if [ ! -e ~/.gradle]; then
+		if [ ! -e ~/.gradle ]; then
 			mkdir ~/.gradle
 		fi
 		touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
