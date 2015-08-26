@@ -23,6 +23,12 @@ RUN cd $HOME \
     && mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME \
     && rm wildfly-$WILDFLY_VERSION.tar.gz
 
+# Download and verify postgres jdbc driver
+ENV POSTGRES_JDBC_SHA1 870b0e689b514304461a9c1aba11920dc5de4321
+RUN cd /opt \
+    && curl -O http://central.maven.org/maven2/org/postgresql/postgresql/9.4-1201-jdbc41/postgresql-9.4-1201-jdbc41.jar \
+    && sha1sum postgresql-9.4-1201-jdbc41.jar | grep $POSTGRES_JDBC_SHA1
+
 # Expose the ports we're interested in
 EXPOSE 8080
 #EXPOSE 9990
