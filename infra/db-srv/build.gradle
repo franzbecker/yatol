@@ -1,0 +1,28 @@
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.image.*
+
+task buildDbDockerImage(type: DockerBuildImage) {
+    dockerFile = project.file('Dockerfile')
+    inputDir = dockerFile.parentFile
+    tag = 'yatol/db-srv'
+}
+
+task createDBContainer(type: DockerCreateContainer) {
+    dependsOn buildDbDockerImage
+    targetImageId { buildDbDockerImage.getImageId() }
+    portBindings = ['5432:5432']
+}
+
+task startDBContainer(type: DockerStartContainer) {
+    dependsOn createDBContainer
+    targetContainerId { createDBContainer.getContainerId() }
+}
+
+task stopDBContainer(type: DockerStopContainer) {
+    targetContainerId { createDBContainer.getContainerId() }
+}
+
+task functionalTestDBContainer {
+    dependsOn startDBContainer
+    finalizedBy stopDBContainer
+}

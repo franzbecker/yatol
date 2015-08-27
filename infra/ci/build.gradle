@@ -1,7 +1,7 @@
 import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.image.*
 
-task buildDockerImage(type: DockerBuildImage) {
+task buildCiDockerImage(type: DockerBuildImage) {
     dockerFile = project.file('Dockerfile')
     inputDir = dockerFile.parentFile
     tag = 'yatol/jenkins'

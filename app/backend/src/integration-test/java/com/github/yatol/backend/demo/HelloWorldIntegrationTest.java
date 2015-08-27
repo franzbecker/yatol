@@ -10,7 +10,7 @@ import com.sun.jersey.api.client.WebResource;
 public class HelloWorldIntegrationTest {
 
 	public static final String BACKEND_URL = "BACKEND_URL";
-	public static final String BACKEND_URL_DEFAULT = "http://localhost:8080/backend/";
+	public static final String BACKEND_URL_DEFAULT = "http://localhost:8081/backend/";
 
 	@Test
 	public void helloWorldJsonTest() throws Exception {

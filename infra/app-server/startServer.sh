@@ -18,7 +18,8 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
     # Start WildFly in a different process for initial configuration
     echo "Starting WildFly for configuration"
-    $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0 > /dev/null &
+    $JBOSS_HOME/bin/add-user.sh admin Admin#007 --silent
+    $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 > /dev/null &
 
     # Wait for WildFly to be ready
     echo "Waiting for WildFly to become ready"

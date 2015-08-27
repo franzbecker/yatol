@@ -9,3 +9,4 @@ project(':frontend').projectDir = "$rootDir/app/frontend" as File
 include 'infra'
 include 'infra:ci'
 include 'infra:app-server'
+include 'infra:db-srv'
