@@ -11,6 +11,7 @@ task createDBContainer(type: DockerCreateContainer) {
     dependsOn buildDbDockerImage
     targetImageId { buildDbDockerImage.getImageId() }
     portBindings = ['5432:5432']
+    containerName = "dbContainer"
 }
 
 task startDBContainer(type: DockerStartContainer) {

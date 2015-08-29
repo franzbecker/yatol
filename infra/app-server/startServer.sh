@@ -14,7 +14,8 @@ function wait_for_server() {
 
 if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
-    # DB_SRV_PORT_5432_TCP_ADDR
+    DB_SRV_PORT_5432_TCP_ADDR='dbContainer'
+    DB_SRV_PORT_5432_TCP_PORT='5432'
 
     # Start WildFly in a different process for initial configuration
     echo "Starting WildFly for configuration"
@@ -63,6 +64,6 @@ EOF
 
     # Start WildFly with PID 1
     echo "Restarting WildFly as main process with PID 1"
-    exec /bin/sh $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0 "$@"
+    exec /bin/sh $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 "$@"
 fi
 exec "$@"

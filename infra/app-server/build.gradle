@@ -42,6 +42,8 @@ task createAppContainer(type: DockerCreateContainer) {
     dependsOn buildAppImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppImage.getImageId() }
     portBindings = ['8081:8080', '9990:9990']
+    containerName = "appContainer"
+    links = ["dbContainer:dbContainer"]
 }
 
 task startAppContainer(type: DockerStartContainer) {
@@ -55,8 +57,10 @@ task stopAppContainer(type: DockerStopContainer) {
 
 task createContainer(type: DockerCreateContainer) {
     dependsOn buildAppServerImage, ':infra:db-srv:startDBContainer'
-    targetImageId { buildImage.getImageId() }
+    targetImageId { buildAppServerImage.getImageId() }
     portBindings = ['8080:8080', '9990:9990']
+    containerName = "pureContainer"
+    links = ["dbContainer:dbContainer"]
 }
 
 task startContainer(type: DockerStartContainer) {
