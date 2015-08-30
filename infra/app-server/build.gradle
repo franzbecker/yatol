@@ -52,6 +52,12 @@ task startAppContainer(type: DockerStartContainer) {
 }
 
 task stopAppContainer(type: DockerStopContainer) {
+    dependsOn ':infra:db-srv:removeDBContainer'
+    targetContainerId { createAppContainer.getContainerId() }
+}
+
+task removeAppContainer(type: DockerRemoveContainer) {
+    dependsOn stopAppContainer
     targetContainerId { createAppContainer.getContainerId() }
 }
 
@@ -69,10 +75,11 @@ task startContainer(type: DockerStartContainer) {
 }
 
 task stopContainer(type: DockerStopContainer) {
+    dependsOn ':infra:db-srv:removeDBContainer'
     targetContainerId { createContainer.getContainerId() }
 }
 
 task functionalTestMyApp {
     dependsOn startAppContainer, ':backend:integrationTest'
-    finalizedBy stopAppContainer
+    finalizedBy removeAppContainer
 }

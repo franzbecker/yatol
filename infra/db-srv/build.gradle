@@ -23,7 +23,12 @@ task stopDBContainer(type: DockerStopContainer) {
     targetContainerId { createDBContainer.getContainerId() }
 }
 
+task removeDBContainer(type: DockerRemoveContainer) {
+    dependsOn stopDBContainer
+    targetContainerId { createDBContainer.getContainerId() }
+}
+
 task functionalTestDBContainer {
     dependsOn startDBContainer
-    finalizedBy stopDBContainer
+    finalizedBy removeDBContainer
 }
