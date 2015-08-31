@@ -78,3 +78,12 @@ task stopContainer(type: DockerStopContainer) {
     dependsOn ':infra:db-srv:removeDBContainer'
     targetContainerId { createContainer.getContainerId() }
 }
+
+task getAppContainerIpAddress(type: DockerInspectContainer) {
+    dependsOn startAppContainer
+    targetContainerId { createAppContainer.getContainerId() }
+    responseHandler { response ->
+        String ipAddress = response.networkSettings.ipAddress
+        System.setProperty("appContainer.ipAddress", ipAddress)
+    }
+}

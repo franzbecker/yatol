@@ -34,11 +34,17 @@ task integrationTest(type: Test, dependsOn: testClasses) {
 }
 
 task integrationTestDocker(type: Test) {
-    dependsOn testClasses, ':infra:app-server:startAppContainer'
+    dependsOn testClasses, ':infra:app-server:startAppContainer',
+            ':infra:app-server:getAppContainerIpAddress'
+
     doFirst {
-      println "Doing some primitive waiting for Docker + JBoss"
-      sleep(30000)
-      println "Done waiting. Executing integration tests."
+        String appContainerIpAddress = System.getProperty("appContainer.ipAddress")
+        String backendUrl = "http://${appContainerIpAddress}:8080/backend/"
+        logger.lifecycle("Setting BACKEND_URL to ${backendUrl}")
+        jvmArgs = jvmArgs + "-DBACKEND_URL=${backendUrl}"
+        println "Doing some primitive waiting for Docker + JBoss"
+        sleep(30000)
+        println "Done waiting. Executing integration tests."
     }
     doLast {
       println "Finished integration tests."

@@ -1,21 +1,18 @@
 package com.github.yatol.backend.demo;
 
-import static com.google.common.truth.Truth.assertThat;
-
-import org.junit.Test;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.junit.Test;
 
-public class HelloWorldIntegrationTest {
+import static com.google.common.truth.Truth.assertThat;
 
-	public static final String BACKEND_URL = "BACKEND_URL";
-	public static final String BACKEND_URL_DEFAULT = "http://localhost:8081/backend/";
+public class HelloWorldIntegrationTest extends AbstractIntegrationTest {
 
 	@Test
 	public void helloWorldJsonTest() throws Exception {
 		// Given
-		String backendUrl = System.getProperty(BACKEND_URL, BACKEND_URL_DEFAULT);
+		String backendUrl = getBackendUrl();
+		logger.info("Using backendUrl='{}'", backendUrl);
 
 		// When
 		WebResource resource = Client.create().resource(backendUrl + "json");
