@@ -29,8 +29,8 @@ task createAppDockerfile(type: Dockerfile) {
     destFile = project.file('build/app/Dockerfile')
 
     from 'yatol/app-server'
-    copyFile('backend.war', '/opt/jboss/wildfly/standalone/deployments/backend.war')
-    copyFile('frontend.war', '/opt/jboss/wildfly/standalone/deployments/frontend.war')
+    copyFile("backend-${project.version}.war", '/opt/jboss/wildfly/standalone/deployments/backend.war')
+    copyFile("frontend-${project.version}.war", '/opt/jboss/wildfly/standalone/deployments/frontend.war')
 }
 
 task buildAppImage(type: DockerBuildImage, dependsOn: createAppDockerfile) {
