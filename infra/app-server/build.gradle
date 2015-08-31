@@ -16,8 +16,8 @@ task buildAppServerImage(type: DockerBuildImage) {
  */
 task copyWars(type: Copy) {
     dependsOn ':backend:war', ':frontend:war'
-    from project(':backend').file('build/libs/backend.war')
-    from project(':frontend').file('build/libs/frontend.war')
+    from project(':backend').file("build/libs/backend-${version}.war")
+    from project(':frontend').file("build/libs/frontend-${version}.war")
     into project.file('build/app')
 }
 
