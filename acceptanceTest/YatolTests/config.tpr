@@ -30,4 +30,4 @@ teamshare_plugin_id=
 
 # Test environment to execute the tests
 ####################################################################
-test.execution.environment.config=vagrant/windows
+test.execution.environment.config=vagrant/linux

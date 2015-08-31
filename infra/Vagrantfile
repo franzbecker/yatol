@@ -24,6 +24,7 @@ Vagrant.configure(2) do |config|
 
   # Share the Git repository with the VM
   config.vm.synced_folder "../", "/yatol"
+  config.vm.synced_folder "/home/karsten/.vagrant.d", "/home/vagrant/.vagrant.d"
 
   # Configure more memory and cores
   config.vm.provider "virtualbox" do |v|
