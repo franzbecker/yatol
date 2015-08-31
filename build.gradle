@@ -7,8 +7,10 @@ allprojects {
 	repositories {
 		jcenter()
 	}
+
+    apply from: "$rootDir/buildSrc/versioning.gradle"
 }
 
 task hello << {
-	println "Hello yatol!"
+	println "Hello yatol $version!"
 }
