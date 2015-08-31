@@ -14,9 +14,6 @@ function wait_for_server() {
 
 if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
-    DB_SRV_PORT_5432_TCP_ADDR='dbContainer'
-    DB_SRV_PORT_5432_TCP_PORT='5432'
-
     # Start WildFly in a different process for initial configuration
     echo "Starting WildFly for configuration"
     $JBOSS_HOME/bin/add-user.sh admin Admin#007 --silent
@@ -29,17 +26,17 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
     # Get the full path of the jdbc driver
     JAR=$(ls /opt/postgres*jar)
     # Prepare connection string
-    CONNECTION_URL=jdbc:postgresql://$DB_SRV_PORT_5432_TCP_ADDR:$DB_SRV_PORT_5432_TCP_PORT/postgres
+    CONNECTION_URL=jdbc:postgresql://$DBCONTAINER_PORT_5432_TCP_ADDR:$DBCONTAINER_PORT_5432_TCP_PORT/postgres
 
     # Check if postgres password is available from environment (source is the linked container)
-    if [ -z "$DB_SRV_ENV_POSTGRES_PASSWORD" ]; then
+    if [ -z "$DBCONTAINER_ENV_POSTGRES_PASSWORD" ]; then
         echo "[WARNING]: Postgres password not found in environment variable; falling back to default 'postgres'!"
-        DB_SRV_ENV_POSTGRES_PASSWORD="postgres"
+        DBCONTAINER_ENV_POSTGRES_PASSWORD="postgres"
     fi
 
     echo "Driver jar: $JAR"
     echo "Connection url: $CONNECTION_URL"
-    echo "Using password: $DB_SRV_ENV_POSTGRES_PASSWORD"
+    echo "Using password: $DBCONTAINER_ENV_POSTGRES_PASSWORD"
 
     # Execute JBOSS cli script to install driver and configure datasource
     echo "Installing driver and configuring data source"
@@ -49,7 +46,7 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
     module add --name=org.postgres --resources=$JAR --dependencies=javax.api,javax.transaction.api
     /subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
 
-    data-source add --jndi-name=java:/PostGreDS --name=PostgrePool --connection-url=$CONNECTION_URL --driver-name=postgres --user-name=postgres --password=$DB_SRV_ENV_POSTGRES_PASSWORD
+    data-source add --jndi-name=java:/PostGreDS --name=PostgrePool --connection-url=$CONNECTION_URL --driver-name=postgres --user-name=postgres --password=$DBCONTAINER_ENV_POSTGRES_PASSWORD
 
     run-batch
 EOF

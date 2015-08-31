@@ -43,7 +43,7 @@ task createAppContainer(type: DockerCreateContainer) {
     targetImageId { buildAppImage.getImageId() }
     portBindings = ['8081:8080', '9990:9990']
     containerName = "appContainer"
-    links = ["dbContainer:dbContainer"]
+    links = ['dbContainer:dbContainer']
 }
 
 task startAppContainer(type: DockerStartContainer) {
@@ -66,7 +66,7 @@ task createContainer(type: DockerCreateContainer) {
     targetImageId { buildAppServerImage.getImageId() }
     portBindings = ['8080:8080', '9990:9990']
     containerName = "pureContainer"
-    links = ["dbContainer:dbContainer"]
+    links = ['dbContainer:dbContainer']
 }
 
 task startContainer(type: DockerStartContainer) {
