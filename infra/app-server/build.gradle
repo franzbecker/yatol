@@ -78,8 +78,3 @@ task stopContainer(type: DockerStopContainer) {
     dependsOn ':infra:db-srv:removeDBContainer'
     targetContainerId { createContainer.getContainerId() }
 }
-
-task functionalTestMyApp {
-    dependsOn startAppContainer, ':backend:integrationTest'
-    finalizedBy removeAppContainer
-}
