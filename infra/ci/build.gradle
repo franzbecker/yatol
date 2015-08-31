@@ -1,8 +1,31 @@
 import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.image.*
 
-task buildCiDockerImage(type: DockerBuildImage) {
+def jenkinsImageTag = 'yatol/jenkins'
+def jenkinsContainerName = 'jenkins'
+
+task buildDockerImage(type: DockerBuildImage) {
     dockerFile = project.file('Dockerfile')
     inputDir = dockerFile.parentFile
-    tag = 'yatol/jenkins'
+    tag = jenkinsImageTag
+}
+
+// TODO do this nicer ;)
+task createJenkinsContainer(type: Exec) {
+    executable "sh"
+    args "start-jenkins.sh"
+}
+
+task startJenkins(type: DockerStartContainer) {
+    dependsOn createJenkinsContainer
+    targetContainerId { jenkinsContainerName }
+}
+
+task stopJenkins(type: DockerStopContainer) {
+    targetContainerId { jenkinsContainerName }
+}
+
+task removeJenkins(type: DockerRemoveContainer) {
+    dependsOn stopJenkins
+    targetContainerId { jenkinsContainerName }
 }

@@ -40,6 +40,27 @@
       <useWorkspaceAsHome>false</useWorkspaceAsHome>
     </hudson.plugins.gradle.Gradle>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.plugins.cloneworkspace.CloneWorkspacePublisher plugin="clone-workspace-scm@0.6">
+      <workspaceGlob></workspaceGlob>
+      <criteria>Any</criteria>
+      <archiveMethod>TAR</archiveMethod>
+      <overrideDefaultExcludes>false</overrideDefaultExcludes>
+    </hudson.plugins.cloneworkspace.CloneWorkspacePublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.28">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>SOURCE_BUILD_NUMBER=${BUILD_NUMBER}</properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>yatol-integrationTestDocker, </projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
   <buildWrappers/>
 </project>
