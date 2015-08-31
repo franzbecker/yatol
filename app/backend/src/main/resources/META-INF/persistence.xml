@@ -11,7 +11,7 @@
 				name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <property
 				name="javax.persistence.jdbc.password" value="mysecretpassword" /> -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.default_schema" value="public" />
 		</properties>
