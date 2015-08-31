@@ -1,4 +1,4 @@
-version = new ProjectVersion(project.currentVersion, System.env.BUILD_NUMBER)
+version = new ProjectVersion(project.currentVersion, System.env.SOURCE_BUILD_NUMBER)
 
 class ProjectVersion {
 
