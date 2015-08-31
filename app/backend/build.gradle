@@ -15,6 +15,7 @@ dependencies {
     providedCompile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
     providedCompile 'org.projectlombok:lombok:1.16.6'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile 'com.google.truth:truth:0.27'
     testCompile 'com.sun.jersey:jersey-bundle:1.19'
 
@@ -43,7 +44,7 @@ task integrationTestDocker(type: Test) {
     dependsOn testClasses, ':infra:app-server:startAppContainer'
     doFirst {
       println "Doing some primitive waiting for Docker + JBoss"
-      sleep(15000)
+      sleep(30000)
       println "Done waiting. Executing integration tests."
     }
     doLast {
