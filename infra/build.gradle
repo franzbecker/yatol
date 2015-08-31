@@ -6,4 +6,8 @@ buildscript {
 
 subprojects {
     apply plugin: 'com.bmuschko.docker-remote-api'
+
+    docker {
+        url = "http://dockerhost:2375"
+    }
 }
