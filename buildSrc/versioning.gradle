@@ -1,0 +1,24 @@
+version = new ProjectVersion(project.currentVersion, System.env.BUILD_NUMBER)
+
+class ProjectVersion {
+
+    String version
+    String build
+
+    ProjectVersion(String version, String build) {
+        this.version = version
+        this.build = build
+    }
+
+    @Override
+    String toString() {
+        String fullVersion = version
+
+        if (build) {
+            fullVersion += ".$build"
+        }
+
+        return fullVersion
+    }
+
+}
