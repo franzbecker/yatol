@@ -42,6 +42,8 @@ task createAppContainer(type: DockerCreateContainer) {
     dependsOn buildAppImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppImage.getImageId() }
     portBindings = ['8081:8080', '9990:9990']
+    mkdir '/yatol/app/deploy'
+    binds =['/yatol/app/deploy':'/opt/jboss/wildfly/standalone/deployments/']
     containerName = "appContainer"
     links = ['dbContainer:dbContainer']
 }
