@@ -35,7 +35,5 @@ EXPOSE 9990
 
 COPY startServer.sh /opt/jboss/wildfly/startServer.sh
 
-RUN wget -O postgresql-9.1-901-1.jdbc4.jar http://search.maven.org/remotecontent?filepath=postgresql/postgresql/9.1-901-1.jdbc4/postgresql-9.1-901-1.jdbc4.jar  
-
 ENTRYPOINT ["/opt/jboss/wildfly/startServer.sh"]
 #ENTRYPOINT /bin/bash
