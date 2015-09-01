@@ -13,4 +13,8 @@ subprojects {
     docker {
         url = dockerUrl
     }
+
+    task clean(type: Delete) {
+        delete 'build'
+    }
 }
