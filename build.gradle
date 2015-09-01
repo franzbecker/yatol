@@ -7,6 +7,9 @@ allprojects {
 	repositories {
 		jcenter()
 	}
+	tasks.withType(JavaCompile) {
+		options.warnings = false // should be handled in the IDE
+	}
 
     apply from: "$rootDir/buildSrc/versioning.gradle"
 }
