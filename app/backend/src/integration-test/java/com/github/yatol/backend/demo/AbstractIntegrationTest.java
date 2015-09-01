@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public class AbstractIntegrationTest {
 
     public static final String BACKEND_URL = "BACKEND_URL";
-    public static final String BACKEND_URL_DEFAULT = "http://localhost:8081/backend/";
+    public static final String BACKEND_URL_DEFAULT = "http://localhost:8080/backend/";
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 

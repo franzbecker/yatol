@@ -1,16 +1,17 @@
 /**
  * 
  */
-var yatolApp = angular.module('yatolApp', [ 'ngRoute', 'yatolControllers' ]);
+var yatolApp = angular.module('yatolApp', [ 'ngRoute', 'yatolControllers',
+    'yatolServices' ]);
 
 yatolApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider.when('/register', {
     templateUrl : 'register.html',
-    controller: 'RegisterCtrl'
+    controller : 'RegisterCtrl'
 
   }).when('/lists', {
     templateUrl : 'lists.html',
-    controller: 'ListsCtrl'
+    controller : 'ListsCtrl'
 
   }).otherwise({
     redirectTo : '/lists'

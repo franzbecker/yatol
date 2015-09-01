@@ -42,8 +42,6 @@ task createAppContainer(type: DockerCreateContainer) {
     dependsOn buildAppImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppImage.getImageId() }
     portBindings = ['8081:8080', '9990:9990']
-    //mkdir '/yatol/app/deploy'
-    //binds =['/yatol/app/deploy':'/opt/jboss/wildfly/standalone/deployments/']
     containerName = "appContainer"
     links = ['dbContainer:dbContainer']
 }
@@ -63,22 +61,25 @@ task removeAppContainer(type: DockerRemoveContainer) {
     targetContainerId { createAppContainer.getContainerId() }
 }
 
-task createContainer(type: DockerCreateContainer) {
+task createDevContainer(type: DockerCreateContainer) {
     dependsOn buildAppServerImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppServerImage.getImageId() }
     portBindings = ['8080:8080', '9990:9990']
-    containerName = "pureContainer"
+    def volumeShare = "${project.rootProject.rootDir}/volumes/app/deploy"
+    mkdir volumeShare
+    binds =["${volumeShare}":"/opt/jboss/wildfly/standalone/deployments/"]
+    containerName = "devContainer"
     links = ['dbContainer:dbContainer']
 }
 
-task startContainer(type: DockerStartContainer) {
-    dependsOn createContainer
-    targetContainerId { createContainer.getContainerId() }
+task startDevContainer(type: DockerStartContainer) {
+    dependsOn createDevContainer
+    targetContainerId { createDevContainer.getContainerId() }
 }
 
-task stopContainer(type: DockerStopContainer) {
+task stopDevContainer(type: DockerStopContainer) {
     dependsOn ':infra:db-srv:removeDBContainer'
-    targetContainerId { createContainer.getContainerId() }
+    targetContainerId { createDevContainer.getContainerId() }
 }
 
 task getAppContainerIpAddress(type: DockerInspectContainer) {

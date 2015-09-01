@@ -3,23 +3,50 @@
  */
 var yatolControllers = angular.module('yatolControllers', []);
 
-yatolControllers.controller('RegisterCtrl', [ '$scope', '$http',
-    function($scope, $http) {
+yatolControllers.factory('Data', function() {
+  var data = {};
+  return data;
+});
+
+yatolControllers.controller('RegisterCtrl', [ '$location', '$scope', '$http',
+    'User', 'Data', function($location, $scope, $http, User, Data) {
       var controller = this;
+      $scope.registerError = false;
+      $scope.loginError = false;
+
+      if (Data.loginToken != null) {
+        $location.path("/lists");
+      }
+      
+      controller._doLogin = function(username) {
+        User.login(username, function(response, getResponseHeaders) {
+          $scope.loginError = !response.success;
+          if (response.success) {
+            Data.loginToken = response.token;
+            $location.path("/lists");
+          }
+        });
+      }
 
       $scope.loginUser = function() {
-        window.alert("Login mit Username: " + $scope.login);
+        controller._doLogin($scope.login)
       }
 
       $scope.registerUser = function() {
-        window.alert("Register");
+
+        User.register($scope.register, function(response, getResponseHeaders) {
+          $scope.registerError = !response.success;
+          if (response.success) {
+            controller._doLogin(response.user.username);
+          }
+        });
       }
 
     } ]);
 
 yatolControllers.controller('ListsCtrl', [ '$location', '$scope', '$http',
-    function($location, $scope, $http) {
-      if ($scope.loggedIn == null) {
+    'Data', function($location, $scope, $http, Data) {
+      if (Data.loginToken == null) {
         $location.path("/register");
       }
     } ]);

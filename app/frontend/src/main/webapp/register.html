@@ -1,13 +1,28 @@
-<h1>Login</h1>
-Username:
-<input ng-model="login" />
-<br />
-<button ng-click="loginUser()">Login</button>
+
+<div class="loginArea">
+	<h1>Login</h1>
+
+	<form ng-submit="loginUser()">
+		Username: <input ng-model="login" /> <br />
+		<button type="submit">Login</button>
+	</form>
+	<div ng-show="loginError">
+		<p>Login fehlgeschlagen</p>
+	</div>
+</div>
 
 <hr />
 
-<h1>Register</h1>
-Username:
-<input ng-model="register" />
-<br />
-<button ng-click="registerUser()">Registrieren</button>
+<div class="registerArea">
+	<h1>Register</h1>
+
+	<form ng-submit="registerUser()">
+		Username: <input ng-model="register" /> <br />
+
+		<button type="submit">Registrieren</button>
+	</form>
+
+	<div ng-show="registerError">
+		<p>Registrierung fehlgeschlagen</p>
+	</div>
+</div>
