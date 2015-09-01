@@ -34,20 +34,17 @@ COPY plugins.sh /usr/local/bin/plugins.sh
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
-# Install Docker from Docker Inc. repositories.
-RUN curl -sSL https://get.docker.com/ubuntu/ | sh
-
-# Install the magic wrapper.
-ADD ./wrapdocker /usr/local/bin/wrapdocker
-RUN chmod +x /usr/local/bin/wrapdocker
-
-
-# Define additional metadata for our image.
-VOLUME /var/lib/docker
-CMD ["wrapdocker"]
-
 # Explicitly configure gradle to not use the gradle daemon
 RUN mkdir ~/.gradle/ -p && touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
 COPY jenkins_home $JENKINS_HOME
+
+# Install VirtualBox
+RUN echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /etc/apt/sources.list.d/virtualbox.list
+RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
+RUN apt-get update
+RUN apt-get install -qqy virtualbox-5.0
+
+# Install Vagrant
+RUN apt-get install -qqy vagrant
 
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
