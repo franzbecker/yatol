@@ -65,7 +65,7 @@ task createDevContainer(type: DockerCreateContainer) {
     dependsOn buildAppServerImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppServerImage.getImageId() }
     portBindings = ['8080:8080', '9990:9990']
-    def volumeShare = "${project.rootProject.rootDir}/volumes/app/deploy"
+    def volumeShare = "${project.projectDir}/build/"
     mkdir volumeShare
     binds =["${volumeShare}":"/opt/jboss/wildfly/standalone/deployments/"]
     containerName = "devContainer"

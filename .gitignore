@@ -183,5 +183,3 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
-/volumes/app/deploy/backend.war.deployed
-/volumes/app/deploy/frontend.war.deployed
