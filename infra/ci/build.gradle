@@ -12,6 +12,7 @@ task buildDockerImage(type: DockerBuildImage) {
 
 // TODO do this nicer ;)
 task createJenkinsContainer(type: Exec) {
+    dependsOn buildDockerImage
     executable "sh"
     args "start-jenkins.sh"
 }
