@@ -10,3 +10,6 @@ include 'infra'
 include 'infra:ci'
 include 'infra:app-server'
 include 'infra:db-srv'
+
+include 'acceptanceTest:webfixture'
+include 'acceptanceTest:YatolTests'

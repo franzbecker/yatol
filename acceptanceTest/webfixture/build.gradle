@@ -1,0 +1,53 @@
+plugins {
+    id "de.undercouch.download" version "2.0.0"
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.testeditor.fixture'
+version = '2.0.2-SNAPSHOT'
+
+description = 'org.testeditor.fixture:web-fixture'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    jcenter()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } // Sonatype snapshot repo required for core-fixture
+}
+
+dependencies {
+    compile group: 'org.testeditor.fixture', name: 'core-fixture', version: '1.7.2-SNAPSHOT'
+
+    compile(group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.47.1') {
+        exclude(module: 'selenium-android-driver')
+        exclude(module: 'selenium-iphone-driver')
+        exclude(module: 'selenium-safari-driver')
+    }
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '2.47.1'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.5.5'
+    testCompile(group: 'org.powermock', name: 'powermock-module-junit4', version: '1.5.5') {
+        exclude(module: 'junit')
+        exclude(module: 'powermock-core')
+        exclude(module: 'powermock-reflect')
+    }
+}
+
+task downloadPatchedFitnesse(type: de.undercouch.gradle.tasks.download.Download) {
+    src 'https://bintray.com/artifact/download/test-editor/Ressources/fitnesse.jar'
+    dest "$buildDir/libs"
+}
+
+task assembleWebFixtureLibs(type: Copy) {
+    into "$buildDir/libs"
+    from configurations.runtime
+    exclude "fitness*.jar"
+}
+
+assembleWebFixtureLibs.dependsOn(downloadPatchedFitnesse)
+build.dependsOn(assembleWebFixtureLibs)
