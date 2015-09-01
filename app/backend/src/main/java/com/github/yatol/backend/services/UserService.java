@@ -15,6 +15,8 @@ import javax.ws.rs.core.MediaType;
 
 import com.github.yatol.backend.entities.User;
 import com.github.yatol.backend.security.LoginToken;
+import com.github.yatol.backend.services.responses.LoginResponse;
+import com.github.yatol.backend.services.responses.RegisterResponse;
 
 @Path("/users")
 @Stateless
@@ -30,7 +32,7 @@ public class UserService {
   @Path("/register")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public UserServiceResponse registerUser(String username) {
+  public RegisterResponse registerUser(String username) {
 
     System.err.println("Paramenter name: " + username);
 
@@ -38,10 +40,10 @@ public class UserService {
       User user = new User();
       user.setUsername(username);
       em.persist(user);
-      return new UserServiceResponse(true, user);
+      return new RegisterResponse(true, user);
 
     } else {
-      return new UserServiceResponse(false, null);
+      return new RegisterResponse(false, null);
     }
   }
 
@@ -49,17 +51,17 @@ public class UserService {
   @Path("/login")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public LoginServiceResponse login(String username) {
+  public LoginResponse login(String username) {
 
     System.err.println("Paramenter name: " + username);
     User user = getUser(username);
 
     if (user != null) {
       String token = loginToken.addToken(user);
-      return new LoginServiceResponse(true, token);
+      return new LoginResponse(true, token);
 
     } else {
-      return new LoginServiceResponse(false, null);
+      return new LoginResponse(false, null);
     }
   }
 

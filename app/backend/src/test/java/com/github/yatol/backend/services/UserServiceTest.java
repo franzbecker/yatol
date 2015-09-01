@@ -17,6 +17,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.github.yatol.backend.entities.User;
 import com.github.yatol.backend.security.LoginToken;
+import com.github.yatol.backend.services.responses.LoginResponse;
+import com.github.yatol.backend.services.responses.RegisterResponse;
 
 public class UserServiceTest {
 
@@ -53,7 +55,7 @@ public class UserServiceTest {
 
   @Test
   public void testRegisterNonExistingUser() throws Exception {
-    UserServiceResponse userServiceResponse = userServiceImpl.registerUser(null);
+    RegisterResponse userServiceResponse = userServiceImpl.registerUser(null);
 
     assertThat(userServiceResponse.isSuccess()).isTrue();
     assertThat(userServiceResponse.getUser()).isNotNull();
@@ -63,7 +65,7 @@ public class UserServiceTest {
   public void testRegisterExistingUser() throws Exception {
     addUserToList();
 
-    UserServiceResponse userServiceResponse = userServiceImpl.registerUser(null);
+    RegisterResponse userServiceResponse = userServiceImpl.registerUser(null);
     assertThat(userServiceResponse.isSuccess()).isFalse();
   }
 
@@ -82,7 +84,7 @@ public class UserServiceTest {
   @Test
   public void testLoginExistingUser() throws Exception {
     addUserToList();
-    LoginServiceResponse loginServiceResponse = userServiceImpl.login(null);
+    LoginResponse loginServiceResponse = userServiceImpl.login(null);
     assertThat(loginServiceResponse.getToken()).isNotNull();
   }
 

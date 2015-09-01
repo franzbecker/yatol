@@ -4,12 +4,12 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Ignore;
 
-public class UserServiceIntegrationtest {
+public class UserLoginIntegrationTest {
 
   // TODO we need running AS in combination with Eclipse to execute integration
   // tests.
   @Ignore
-  public void testRegisterUser() throws Exception {
+  public void testLoginUser() throws Exception {
 
     // given
     UserService userServiceImpl = new UserService();

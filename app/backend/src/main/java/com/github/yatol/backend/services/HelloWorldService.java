@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.yatol.backend.demo;
+package com.github.yatol.backend.services;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -27,12 +28,13 @@ import com.github.yatol.backend.entities.User;
 
 @Path("/")
 @Stateless
-public class HelloWorld {
+public class HelloWorldService {
 
   @PersistenceContext(unitName = "yatol")
   private EntityManager em;
 
   @GET
+  @POST
   @Path("/json")
   @Produces({ "application/json" })
   public String getHelloWorldJSON() {
@@ -49,6 +51,7 @@ public class HelloWorld {
   }
 
   @GET
+  @POST
   @Path("/xml")
   @Produces({ "application/xml" })
   public String getHelloWorldXML() {

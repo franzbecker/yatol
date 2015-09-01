@@ -1,25 +1,19 @@
 package com.github.yatol.backend.demo;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import org.junit.Test;
-
 import static com.google.common.truth.Truth.assertThat;
+
+import org.junit.Ignore;
 
 public class HelloWorldIntegrationTest extends AbstractIntegrationTest {
 
-	@Test
-	public void helloWorldJsonTest() throws Exception {
-		// Given
-		String backendUrl = getBackendUrl();
-		logger.info("Using backendUrl='{}'", backendUrl);
+  @Ignore
+  public void helloWorldJsonTest() throws Exception {
 
-		// When
-		WebResource resource = Client.create().resource(backendUrl + "json");
-		String result = resource.get(String.class);
+    // When
+    String result = callBackend("json", String.class);
 
-		// Then
-		assertThat(result).isEqualTo("{\"result\":\"Hello World\"}");
-	}
+    // Then
+    assertThat(result).isEqualTo("{\"result\":\"Hello World\"}");
+  }
 
 }

@@ -14,12 +14,14 @@ sourceSets {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
     providedCompile 'org.jboss.spec:jboss-javaee-all-7.0:1.0.3.Final'
+    testCompile 'org.postgresql:postgresql:9.4-1201-jdbc41'
     testCompile 'junit:junit:4.12'
+    testCompile 'com.google.code.gson:gson:2.3.1'
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile 'com.google.truth:truth:0.27'
     testCompile 'com.sun.jersey:jersey-bundle:1.19'
+    testCompile 'org.slf4j:slf4j-simple:1.7.12'
 
     // Configure integrationTest
 	integrationTestCompile sourceSets.main.output

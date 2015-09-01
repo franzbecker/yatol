@@ -1,4 +1,4 @@
-package com.github.yatol.backend.services;
+package com.github.yatol.backend.services.responses;
 
 import com.github.yatol.backend.entities.User;
 
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public class UserServiceResponse {
+public class RegisterResponse {
 
   private boolean success;
   private User user;
