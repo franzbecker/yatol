@@ -13,8 +13,8 @@ tpr-version=1.4
 ###################################################################
 
 library_id=org.testeditor.xmllibrary
-library.xmllibrary.actiongroup=YatolTests/AllActionGroups.xml
-library.xmllibrary.technicalbindings=YatolTests/TechnicalBindingTypeCollection.xml
+library.xmllibrary.actiongroup=YatolTests/src-gen/com/github/yatol/acceptancetests/AllActionGroups.xml
+library.xmllibrary.technicalbindings=YatolTests/src-gen/com/github/yatol/acceptancetests/TechnicalBindingTypeCollection.xml
 
 
 # testautomat (FitNesse server settings)
@@ -28,6 +28,6 @@ testautomat.serverid=fitnesse_based_1.2
 
 teamshare_plugin_id=
 
-
+# Test environment to execute the tests
+####################################################################
 test.execution.environment.config=vagrant/linux
-#test.execution.environment.config=vagrant/windows

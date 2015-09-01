@@ -36,3 +36,4 @@ EXPOSE 9990
 COPY startServer.sh /opt/jboss/wildfly/startServer.sh
 
 ENTRYPOINT ["/opt/jboss/wildfly/startServer.sh"]
+#ENTRYPOINT /bin/bash
