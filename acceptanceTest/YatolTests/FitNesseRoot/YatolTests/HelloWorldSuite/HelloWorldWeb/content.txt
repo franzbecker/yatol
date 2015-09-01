@@ -1,0 +1,11 @@
+!include <YatolTests.TestSzenarien.StartBrwoser
+!|script|
+|Start Brwoser|
+#
+# Maske: AllgemeinBrowser
+-!|script|
+|navigiere auf die Seite|http://10.0.2.2:8081/frontend/|
+|warte|1|Sekunden|
+|überprüfe ob der Text|Calling webservice |vorhanden ist|
+|überprüfe ob der Text|Hello World|vorhanden ist|
+|beende Browser|
