@@ -4,10 +4,13 @@ buildscript {
     }
 }
 
+String dockerUrl = System.getenv("YATOL_DOCKER_HOST") ?: "http://dockerhost:2375"
+logger.info("Using docker.url='$dockerUrl'")
+
 subprojects {
     apply plugin: 'com.bmuschko.docker-remote-api'
 
     docker {
-        url = "http://dockerhost:2375"
+        url = dockerUrl
     }
 }
