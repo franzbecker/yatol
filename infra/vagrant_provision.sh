@@ -103,8 +103,14 @@ function setUpBash() {
 
 echo "Provisioning virtual machine..."
 
-echo "Calling apt-get update"
-apt-get update -qq
+echo "Install VirtualBox"
+echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /etc/apt/sources.list.d/virtualbox.list
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
+apt-get update
+apt-get install -qqy virtualbox-5.0
+
+#echo "Calling apt-get update"
+#apt-get update -qq
 
 echo "Installing language pack"
 apt-get install -qqy language-pack-de

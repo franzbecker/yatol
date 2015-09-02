@@ -4,7 +4,7 @@ plugins {
 
 import de.undercouch.gradle.tasks.download.Download
 
-task downloadTestEditorLinux(type: Download) {
+task downloadTestEditorLinux(dependsOn: ':infra:app-server:startAppContainer', type: Download) {
 	def file = "TestEditor-linux.gtk.x86_64.zip"
     src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/product/org.testeditor.product/target/products/$file"
     dest "test-editor/$file"
@@ -18,23 +18,25 @@ task unzipTestEditorLinux(dependsOn: downloadTestEditorLinux, type: Copy) {
     into target
 }
 
-task runServiceAcceptanceTest(dependsOn: unzipTestEditorLinux, ':infra:app-server:startAppContainer', type: Exec) {
+task runServiceAcceptanceTest(dependsOn: unzipTestEditorLinux, type: Exec) {
     executable "sh"
     doFirst {
     	logger.lifecycle("Executing $args")
     }
     args "-c", "java -jar ${unzipTestEditorLinux.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.ServicePipeline ExecuteTestEnv=localhost"
+    finalizedBy ':infra:app-server:removeAppContainer'
 }
 
-task runAcceptanceTestLinux(dependsOn: unzipTestEditorLinux,':infra:app-server:startAppContainer', type: Exec) {
+task runAcceptanceTestLinux(dependsOn: unzipTestEditorLinux, type: Exec) {
     executable "sh"
     doFirst {
     	logger.lifecycle("Executing $args")
     }
     args "-c", "java -jar ${unzipTestEditorLinux.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/linux"
+    finalizedBy ':infra:app-server:removeAppContainer'
 }
 
-task downloadTestEditorWindows(type: Download) {
+task downloadTestEditorWindows(dependsOn: ':infra:app-server:startAppContainer', type: Download) {
 	def file = "TestEditor_JRE-win32.win32.x86.zip"
     src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/jreproduct/org.testeditor.jre.product/target/products/$file"
     dest "vagrant/windows/test-editor/$file"
@@ -48,10 +50,11 @@ task unzipTestEditorWindows(dependsOn: downloadTestEditorWindows, type: Copy) {
     into target
 }
 
-task runAcceptanceTestWindows(dependsOn: unzipTestEditorWindows,':infra:app-server:startAppContainer', type: Exec) {
+task runAcceptanceTestWindows(dependsOn: unzipTestEditorWindows, type: Exec) {
     executable "sh"
     doFirst {
     	logger.lifecycle("Executing $args")
     }
     args "-c", "java -DTESTEDITOR_HOME=${unzipTestEditorWindows.target} -jar ${unzipTestEditorWindows.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/windows"
+    finalizedBy ':infra:app-server:removeAppContainer'
 }
