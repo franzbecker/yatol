@@ -43,6 +43,8 @@ RUN echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /e
 RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
 RUN apt-get update
 RUN apt-get install -qqy virtualbox-5.0
+RUN apt-get install -qqy linux-headers-generic      # Install kernel headers
+RUN /etc/init.d/vboxdrv setup                       # Recompile VirtualBox kernel modules
 
 # Install Vagrant
 RUN apt-get install -qqy vagrant
