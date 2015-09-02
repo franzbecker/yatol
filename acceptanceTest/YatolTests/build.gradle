@@ -4,7 +4,7 @@ plugins {
 
 import de.undercouch.gradle.tasks.download.Download
 
-task downloadTestEditor(type: Download) {
+task downloadTestEditorLinux(type: Download) {
 	def file = "TestEditor-linux.gtk.x86_64.zip"
     src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/product/org.testeditor.product/target/products/$file"
     dest "test-editor/$file"
@@ -12,16 +12,38 @@ task downloadTestEditor(type: Download) {
     onlyIfNewer true
 }
 
-task unzipTestEditor(dependsOn: downloadTestEditor, type: Copy) {
-	ext.target = downloadTestEditor.dest.parent
-    from zipTree(downloadTestEditor.dest)
+task unzipTestEditorLinux(dependsOn: downloadTestEditorLinux, type: Copy) {
+	ext.target = downloadTestEditorLinux.dest.parent
+    from zipTree(downloadTestEditorLinux.dest)
     into target
 }
 
-task runAcceptanceTest(dependsOn: unzipTestEditor, type: Exec) {
+task runAcceptanceTestLinux(dependsOn: unzipTestEditorLinux, type: Exec) {
     executable "sh"
     doFirst {
     	logger.lifecycle("Executing $args")
     }
-    args "-c", "java -jar ${unzipTestEditor.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/linux"
+    args "-c", "java -jar ${unzipTestEditorLinux.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/linux"
+}
+
+task downloadTestEditorWindows(type: Download) {
+	def file = "TestEditor_JRE-win32.win32.x86.zip"
+    src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/jreproduct/org.testeditor.jre.product/target/products/$file"
+    dest "vagrant/windows/test-editor/$file"
+    acceptAnyCertificate true
+    onlyIfNewer true
+}
+
+task unzipTestEditorWindows(dependsOn: downloadTestEditorWindows, type: Copy) {
+	ext.target = downloadTestEditorWindows.dest.parent
+    from zipTree(downloadTestEditorWindows.dest)
+    into target
+}
+
+task runAcceptanceTestWindows(dependsOn: unzipTestEditorWindows, type: Exec) {
+    executable "sh"
+    doFirst {
+    	logger.lifecycle("Executing $args")
+    }
+    args "-c", "java -DTESTEDITOR_HOME=${unzipTestEditorWindows.target} -jar ${unzipTestEditorWindows.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/windows"
 }
