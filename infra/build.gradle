@@ -4,7 +4,7 @@ buildscript {
     }
 }
 
-String dockerUrl = System.getenv("DOCKER_HOST") ? System.getenv("DOCKER_HOST").replace("tcp://", "http://") ?: "http://dockerhost:2375"
+String dockerUrl = System.getenv("DOCKER_HOST") ? System.getenv("DOCKER_HOST").replace("tcp://", "http://") : "http://dockerhost:2375"
 logger.info("Using docker.url='$dockerUrl'")
 
 subprojects {
