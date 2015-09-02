@@ -1,3 +1,6 @@
+/**
+ * Webservices for yatol
+ */
 var yatolServices = angular.module('yatolServices', [ 'ngResource' ]);
 
 yatolServices.factory('User', [ '$resource', function($resource) {
