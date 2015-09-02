@@ -1,3 +1,7 @@
+plugins {
+    id "net.researchgate.release" version "2.2.1"
+}
+
 allprojects {
 	buildscript {
   		repositories {
@@ -10,10 +14,20 @@ allprojects {
 	tasks.withType(JavaCompile) {
 		options.warnings = false // should be handled in the IDE
 	}
-
-    apply from: "$rootDir/buildSrc/versioning.gradle"
 }
 
-task hello << {
-	println "Hello yatol $version!"
+/*
+ * Configure release plugin.
+ */
+// Remove tasks "updateVersion" and "commitNewVersion" as we don't want the new SNAPSHOT version commit on the master branch.
+tasks.release.tasks -= ["updateVersion", "commitNewVersion"]
+// If not configured differently from the outside, use automatic versioning
+if (!project.hasProperty('release.useAutomaticVersion')) {
+    project.ext.setProperty('release.useAutomaticVersion', true)
+}
+release {
+    preTagCommitMessage = '[release] - pre tag commit: '
+    tagCommitMessage = '[release] - creating tag: '
+    newVersionCommitMessage = '[release] - new version commit: '
+    tagTemplate = 'v${version}'
 }
