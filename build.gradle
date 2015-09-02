@@ -16,19 +16,4 @@ allprojects {
 	}
 }
 
-/*
- * Configure release plugin.
- */
-// Remove tasks "updateVersion" and "commitNewVersion" as we don't want the new SNAPSHOT version commit on the master branch.
-tasks.release.tasks -= ["updateVersion", "commitNewVersion"]
-// If not configured differently from the outside, use automatic versioning
-if (!project.hasProperty('release.useAutomaticVersion')) {
-    project.ext.setProperty('release.useAutomaticVersion', true)
-}
-release {
-    failOnSnapshotDependencies = false // required for org.testeditor.fixture:core-fixture:1.7.2-SNAPSHOT
-    preTagCommitMessage = '[release] - pre tag commit: '
-    tagCommitMessage = '[release] - creating tag: '
-    newVersionCommitMessage = '[release] - new version commit: '
-    tagTemplate = 'v${version}'
-}
+apply from: "$rootDir/buildSrc/release.gradle"
