@@ -20,6 +20,7 @@ component AllgemeinBrowser is BrowserCP {
 	}
 }
 
+
 component Login is page {
 	element username is Text {
 		locator = "webid::username"
