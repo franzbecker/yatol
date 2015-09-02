@@ -47,6 +47,9 @@ RUN apt-get install -qqy linux-headers-generic      # Install kernel headers
 RUN /etc/init.d/vboxdrv setup                       # Recompile VirtualBox kernel modules
 
 # Install Vagrant
-RUN apt-get install -qqy vagrant
+#RUN wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb -O- | dpkg --install -
+#dpkg --install vagrant_1.7.4_x86_64.deb
+RUN curl -L  https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb -O
+RUN dpkg --install vagrant_1.7.4_x86_64.deb
 
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
