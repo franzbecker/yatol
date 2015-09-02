@@ -18,6 +18,14 @@ task unzipTestEditorLinux(dependsOn: downloadTestEditorLinux, type: Copy) {
     into target
 }
 
+task runServiceAcceptanceTest(dependsOn: unzipTestEditorLinux, type: Exec) {
+    executable "sh"
+    doFirst {
+    	logger.lifecycle("Executing $args")
+    }
+    args "-c", "java -jar ${unzipTestEditorLinux.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.ServicePipeline ExecuteTestEnv=localhost"
+}
+
 task runAcceptanceTestLinux(dependsOn: unzipTestEditorLinux, type: Exec) {
     executable "sh"
     doFirst {
