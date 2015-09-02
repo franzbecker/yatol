@@ -13,28 +13,10 @@ release {
     tagTemplate = 'v${version}'
 }
 
-String RELEASE_NUMBER = 'release.number'
-
 /**
- * We want to automatically increase the "releaseNumber" before building the release.
+ * We want to automatically increase the version BEFORE building the release.
  */
 task increaseReleaseNumber << {
-    // Load properties file
-//    File propertiesFile = file("gradle.properties")
-//    Properties properties = new Properties()
-//    propertiesFile.withReader { properties.load(it) }
-//    String releaseNumber = properties.getProperty(RELEASE_NUMBER)
-//    assert releaseNumber, "[$propertiesFile.canonicalPath] contains no '${RELEASE_NUMBER}' property"
-//
-//    // Increase releaseNumber
-//    String newReleaseNumber = String.valueOf(Integer.parseInt(releaseNumber) + 1)
-//    writeVersion(propertiesFile, RELEASE_NUMBER, newReleaseNumber)
-//
-//    // Set new version number for build
-//    String newVersion = "${project.version}.${newReleaseNumber}"
-//    project.version = newVersion
-//    logger.lifecycle("Setting project.version to ${project.version}")
-
-    project.ext.releaseVersion = "2.3.2"
+    project.plugins.findPlugin("net.researchgate.release").updateVersion()
 }
 tasks.getByName("createScmAdapter").dependsOn increaseReleaseNumber
