@@ -1,6 +1,3 @@
-/**
- * see <a href="https://docs.angularjs.org/tutorial/step_11" />
- */
 var yatolServices = angular.module('yatolServices', [ 'ngResource' ]);
 
 yatolServices.factory('User', [ '$resource', function($resource) {
