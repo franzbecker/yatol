@@ -1,5 +1,5 @@
 /**
- * see <a href="https://docs.angularjs.org/tutorial/step_11" />
+ * Webservices for yatol
  */
 var yatolServices = angular.module('yatolServices', [ 'ngResource' ]);
 
