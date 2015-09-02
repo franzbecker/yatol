@@ -19,4 +19,4 @@ release {
 task increaseReleaseNumber << {
     project.plugins.findPlugin("net.researchgate.release").updateVersion()
 }
-tasks.getByName("createScmAdapter").dependsOn increaseReleaseNumber
+tasks.getByName("confirmReleaseVersion").dependsOn increaseReleaseNumber
