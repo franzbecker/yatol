@@ -1,0 +1,21 @@
+/*
+ * Configure release plugin.
+ */
+// Remove tasks we don't need here
+tasks.release.tasks -= ["unSnapshotVersion", "updateVersion", "commitNewVersion"]
+
+// Configure release properties
+release {
+    failOnSnapshotDependencies = false // required for org.testeditor.fixture:core-fixture:1.7.2-SNAPSHOT
+    preTagCommitMessage = '[release] '
+    tagCommitMessage = '[release] '
+    tagTemplate = 'v${version}'
+}
+
+/**
+ * We want to automatically increase the version BEFORE building the release.
+ */
+task increaseReleaseNumber << {
+    project.plugins.findPlugin("net.researchgate.release").updateVersion()
+}
+tasks.getByName("confirmReleaseVersion").dependsOn increaseReleaseNumber

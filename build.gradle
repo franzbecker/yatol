@@ -1,3 +1,7 @@
+plugins {
+    id "net.researchgate.release" version "2.2.1"
+}
+
 allprojects {
 	buildscript {
   		repositories {
@@ -10,10 +14,6 @@ allprojects {
 	tasks.withType(JavaCompile) {
 		options.warnings = false // should be handled in the IDE
 	}
-
-    apply from: "$rootDir/buildSrc/versioning.gradle"
 }
 
-task hello << {
-	println "Hello yatol $version!"
-}
+apply from: "$rootDir/buildSrc/release.gradle"
