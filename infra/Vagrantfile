@@ -15,6 +15,9 @@ Vagrant.configure(2) do |config|
   # JBoss Admin Port
   config.vm.network "forwarded_port", guest: 9990, host: 9990
 
+  # JBoss Debug Port
+  config.vm.network "forwarded_port", guest: 8787, host: 8787
+
   # Postgres
   config.vm.network "forwarded_port", guest: 5432, host: 5432
 

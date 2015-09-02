@@ -64,7 +64,8 @@ task removeAppContainer(type: DockerRemoveContainer) {
 task createDevContainer(type: DockerCreateContainer) {
     dependsOn buildAppServerImage, ':infra:db-srv:startDBContainer'
     targetImageId { buildAppServerImage.getImageId() }
-    portBindings = ['8081:8080', '9990:9990']
+    portBindings = ['8787:8787', '8081:8080', '9990:9990']
+    cmd = ['--debug']
     def volumeShare = "${project.projectDir}/build/"
     mkdir volumeShare
     binds =["${volumeShare}":"/opt/jboss/wildfly/standalone/deployments/"]

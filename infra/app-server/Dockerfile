@@ -32,6 +32,8 @@ RUN cd /opt \
 # Expose the ports we're interested in
 EXPOSE 8080
 EXPOSE 9990
+EXPOSE 8787
+
 
 COPY startServer.sh /opt/jboss/wildfly/startServer.sh
 
