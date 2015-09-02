@@ -36,6 +36,15 @@ task runAcceptanceTestLinux(dependsOn: unzipTestEditorLinux, type: Exec) {
     finalizedBy ':infra:app-server:removeAppContainer'
 }
 
+task runAcceptanceTestLinuxHeadless(dependsOn: unzipTestEditorLinux, type: Exec) {
+    executable "sh"
+    doFirst {
+    	logger.lifecycle("Executing $args")
+    }
+    args "-c", "java -jar ${unzipTestEditorLinux.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/linuxci"
+    finalizedBy ':infra:app-server:removeAppContainer'
+}
+
 task downloadTestEditorWindows(dependsOn: ':infra:app-server:startAppContainer', type: Download) {
 	def file = "TestEditor_JRE-win32.win32.x86.zip"
     src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/jreproduct/org.testeditor.jre.product/target/products/$file"
