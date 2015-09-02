@@ -7,10 +7,11 @@ import java.sql.Statement;
 
 import javax.ws.rs.core.MediaType;
 
-import org.junit.AfterClass;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.yatol.backend.services.responses.RegisterResponse;
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -27,8 +28,12 @@ public class AbstractIntegrationTest {
   private static final String user = "postgres";
   private static final String pwd = "postgres";
 
-  @AfterClass
-  public static void afterTests() {
+  @Before
+  public void beforeTests() {
+    cleaupDatabase();
+  }
+
+  protected void cleaupDatabase() {
     try {
       Connection connection = DriverManager.getConnection(url, user, pwd);
       Statement statement = connection.createStatement();
@@ -46,6 +51,10 @@ public class AbstractIntegrationTest {
     } else {
       return backendUrl + "/";
     }
+  }
+
+  protected RegisterResponse registerUser(String username) {
+    return callBackend("users/register", RegisterResponse.class, username);
   }
 
   protected <T> T callBackend(String urlpart, Class<T> clazz, String jsonInput) {

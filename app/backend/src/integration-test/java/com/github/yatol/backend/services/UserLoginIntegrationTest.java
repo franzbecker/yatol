@@ -2,22 +2,35 @@ package com.github.yatol.backend.services;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Ignore;
+import org.junit.Test;
 
-public class UserLoginIntegrationTest {
+import com.github.yatol.backend.demo.AbstractIntegrationTest;
+import com.github.yatol.backend.services.responses.LoginResponse;
 
-  // TODO we need running AS in combination with Eclipse to execute integration
-  // tests.
-  @Ignore
+public class UserLoginIntegrationTest extends AbstractIntegrationTest {
+
+  private static final String HUGO_USERNAME = "Hugo";
+
+  @Test
   public void testLoginUser() throws Exception {
+    // given: user is registered
+    registerUser(HUGO_USERNAME);
 
-    // given
-    UserService userServiceImpl = new UserService();
+    // when: user wants to login
+    LoginResponse response = callBackend("users/login", LoginResponse.class, "Hugo");
 
-    // when
-    userServiceImpl.registerUser("Hugo");
+    // then: call is success
+    assertThat(response.isSuccess()).isTrue();
+    assertThat(response.getToken()).isNotNull();
+  }
 
-    // then
-    assertThat(userServiceImpl.getUser("Hugo")).isNotNull();
+  @Test
+  public void testLoginNotExistingUser() throws Exception {
+    // when: user wants to login but not exists
+    LoginResponse response = callBackend("users/login", LoginResponse.class, "Hugo");
+
+    // then: call is discarded
+    assertThat(response.isSuccess()).isFalse();
+    assertThat(response.getToken()).isNull();
   }
 }

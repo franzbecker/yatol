@@ -24,11 +24,16 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.yatol.backend.entities.User;
 
 @Path("/")
 @Stateless
 public class HelloWorldService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldService.class);
 
   @PersistenceContext(unitName = "yatol")
   private EntityManager em;
@@ -38,14 +43,14 @@ public class HelloWorldService {
   @Path("/json")
   @Produces({ "application/json" })
   public String getHelloWorldJSON() {
-    System.out.println("Got json");
+    LOGGER.debug("Got json");
 
     User user = new User();
     user.setUsername("Hugo");
 
     em.persist(user);
 
-    System.err.println("User-toString: " + user.getId());
+    LOGGER.debug("Persisted user" + user);
 
     return "{\"result\":\"" + "Hello World" + "\"}";
   }
@@ -55,7 +60,7 @@ public class HelloWorldService {
   @Path("/xml")
   @Produces({ "application/xml" })
   public String getHelloWorldXML() {
-    System.out.println("Got xml");
+    LOGGER.debug("Got xml");
     return "<xml><result>" + "Hello World" + "</result></xml>";
   }
 }
