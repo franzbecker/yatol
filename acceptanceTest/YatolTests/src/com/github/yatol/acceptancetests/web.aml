@@ -6,6 +6,7 @@ element type BrowserHandle {
 	interactions = Starte_Browser
 }
 
+
 element type Text {
 	interactions = Eingabe_Wert, Pruefe_Text_Vorhanden, Leere_Wert
 }

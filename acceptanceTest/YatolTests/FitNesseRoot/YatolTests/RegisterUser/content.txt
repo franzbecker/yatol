@@ -1,5 +1,8 @@
+!include <YatolTests.TestSzenarien.StartBrwoser
+!|script|
+|StartBrwoser|
+#
 # Maske: AllgemeinBrowser
 -!|script|
-|starte Browser|Firefox|
-|warte|3|Sekunden|
+|warte|1|Sekunden|
 |beende Browser|
