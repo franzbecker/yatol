@@ -62,6 +62,45 @@ function gradleEnableDaemon() {
 	fi
 }
 
+function addDockerDeleteShellScript() {
+	touch deleteAllDockerImages.sh
+	chown vagrant:vagrant deleteAllDockerImages.sh
+	chmod u+rwx deleteAllDockerImages.sh
+	echo "#!/bin/bash" > deleteAllDockerImages.sh
+	echo "# Stop and remove all containers" >> deleteAllDockerImages.sh
+	echo "docker stop \$(docker ps -a -q)" >> deleteAllDockerImages.sh
+	echo "docker rm \$(docker ps -a -q)" >> deleteAllDockerImages.sh
+}
+
+function setUpBash() {
+	echo "# if running bash" > .profile
+	echo "if [ -n \"\$BASH_VERSION\" ]; then" >> .profile
+	echo "    # include .bashrc if it exists"  >> .profile
+	echo "    if [ -f \"\$HOME/.bashrc\" ]; then"  >> .profile
+	echo "	. \"\$HOME/.bashrc\""  >> .profile
+	echo "    fi"  >> .profile
+	echo "fi"  >> .profile
+ 	echo ""  >> .profile
+	echo "# set PATH so it includes user's private bin if it exists" >> .profile
+	echo "if [ -d \"\$HOME/bin\" ] ; then" >> .profile
+	echo "    PATH=\"\$HOME/bin:\$PATH\"" >> .profile
+	echo "fi" >> .profile
+	echo "" >> .profile
+
+	GSCRIPT=$(curl https://gist.githubusercontent.com/franzbecker/b4bb77f66d36472548bf/raw/7541ed987dd0bf5a98555ace1f198ac0a514fd9b/gradle.bash)
+	echo "$GSCRIPT" >> .profile
+	echo "" >> .profile
+	echo "# Stops and removes all running docker images" >> .profile
+	echo "alias dadf='~/deleteAllDockerImages.sh'" >> .profile
+	echo "" >> .profile
+	echo "# show all files" >> .profile
+	echo "alias ll='ls -al'" >> .profile
+	echo "" >> .profile
+	echo "export CLICOLOR=1" >> .profile
+	echo "export LSCOLORS=ExFxBxDxCxegedabagacad" >> .profile
+
+}
+
 echo "Provisioning virtual machine..."
 
 echo "Calling apt-get update"
@@ -81,3 +120,9 @@ dockerEnableRemoteApi
 
 echo "Enable Gradle daemon"
 gradleEnableDaemon
+
+echo "Add delete all docker container script"
+addDockerDeleteShellScript
+
+echo "Setup bash profile"
+setUpBash
