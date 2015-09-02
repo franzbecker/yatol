@@ -7,9 +7,8 @@ tasks.release.tasks -= ["unSnapshotVersion", "updateVersion", "commitNewVersion"
 // Configure release properties
 release {
     failOnSnapshotDependencies = false // required for org.testeditor.fixture:core-fixture:1.7.2-SNAPSHOT
-    preTagCommitMessage = '[release] - pre tag commit: '
-    tagCommitMessage = '[release] - creating tag: '
-    newVersionCommitMessage = '[release] - new version commit: '
+    preTagCommitMessage = '[release] '
+    tagCommitMessage = '[release] '
     tagTemplate = 'v${version}'
 }
 
