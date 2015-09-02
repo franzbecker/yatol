@@ -20,28 +20,21 @@ String RELEASE_NUMBER = 'release.number'
  */
 task increaseReleaseNumber << {
     // Load properties file
-    File propertiesFile = file("gradle.properties")
-    Properties properties = new Properties()
-    propertiesFile.withReader { properties.load(it) }
-    String releaseNumber = properties.getProperty(RELEASE_NUMBER)
-    assert releaseNumber, "[$propertiesFile.canonicalPath] contains no '${RELEASE_NUMBER}' property"
+//    File propertiesFile = file("gradle.properties")
+//    Properties properties = new Properties()
+//    propertiesFile.withReader { properties.load(it) }
+//    String releaseNumber = properties.getProperty(RELEASE_NUMBER)
+//    assert releaseNumber, "[$propertiesFile.canonicalPath] contains no '${RELEASE_NUMBER}' property"
+//
+//    // Increase releaseNumber
+//    String newReleaseNumber = String.valueOf(Integer.parseInt(releaseNumber) + 1)
+//    writeVersion(propertiesFile, RELEASE_NUMBER, newReleaseNumber)
+//
+//    // Set new version number for build
+//    String newVersion = "${project.version}.${newReleaseNumber}"
+//    project.version = newVersion
+//    logger.lifecycle("Setting project.version to ${project.version}")
 
-    // Increase releaseNumber
-    String newReleaseNumber = String.valueOf(Integer.parseInt(releaseNumber) + 1)
-    writeVersion(propertiesFile, RELEASE_NUMBER, newReleaseNumber)
-
-    // Set new version number for build
-    String newVersion = "${project.version}.${newReleaseNumber}"
-    project.version = newVersion
-    logger.lifecycle("Setting project.version to ${project.version}")
+    project.ext.releaseVersion = "2.3.2"
 }
 tasks.getByName("createScmAdapter").dependsOn increaseReleaseNumber
-
-// Taken from https://github.com/researchgate/gradle-release/
-protected void writeVersion(File file, String key, version) {
-    // we use replace here as other ant tasks escape and modify the whole file
-    project.ant.replaceregexp(file: file, byline: true) {
-        regexp(pattern: "$key(\\s*)=(\\s*).+")
-        substitution(expression: "$key\\1=\\2$version")
-    }
-}

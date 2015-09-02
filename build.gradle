@@ -17,3 +17,11 @@ allprojects {
 }
 
 apply from: "$rootDir/buildSrc/release.gradle"
+
+release {
+    failOnCommitNeeded = false
+    failOnPublishNeeded = false
+    failOnSnapshotDependencies = false
+    failOnUnversionedFiles = false
+    failOnUpdateNeeded = false
+}
