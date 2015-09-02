@@ -107,7 +107,7 @@ echo "Install VirtualBox"
 echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /etc/apt/sources.list.d/virtualbox.list
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
 apt-get update
-apt-get install -qqy virtualbox-5.0
+apt-get install -qqy linux-headers-generic virtualbox-dkms virtualbox-5.0
 
 #echo "Calling apt-get update"
 #apt-get update -qq
