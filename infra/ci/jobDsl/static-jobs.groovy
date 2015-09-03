@@ -3,7 +3,7 @@ def defaultCron = 'H/3 * * * *'
 
 job('develop_build') {
     scm {
-        git "https://github.com/${repo}.git", 'develop', {
+        github repo, 'develop', {
             createTag(false)
         }
     }
@@ -25,7 +25,7 @@ job('develop_integrationTest') {
 
 job('master_build') {
     scm {
-        git "https://github.com/${repo}.git", 'master', {
+        github repo, 'master', {
             createTag(false)
         }
     }

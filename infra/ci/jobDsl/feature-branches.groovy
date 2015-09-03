@@ -10,7 +10,7 @@ branches.findAll { it.name.startsWith('feature/') }.each { branch ->
 
     job(jobName) {
         scm {
-            git "https://github.com/${repo}.git", branch.name, {
+            github repo, branch.name, {
                 createTag false
             }
         }
