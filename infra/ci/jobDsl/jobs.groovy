@@ -1,0 +1,64 @@
+repo = 'yatol/yatol'
+
+// Create jobs for static branches
+['develop', 'master'].each { branch ->
+
+    // build job
+    def buildJob = defaultBuildJob(branch, true)
+    buildJob.with {
+        publishers {
+            publishCloneWorkspace("")
+            downstream "${branch}_integrationTestDocker"
+        }
+    }
+
+    // integrationTestDocker job
+    job("${branch}_integrationTestDocker") {
+        scm {
+            cloneWorkspace(buildJob.name)
+        }
+        steps {
+            gradle 'integrationTestDocker'
+        }
+    }
+
+}
+
+// Create jobs for feature branches
+def branchApi = new URL("https://api.github.com/repos/$repo/branches")
+def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
+
+branches.findAll { it.name.startsWith('feature/') }.each { branch ->
+    defaultBuildJob(branch.name, false)
+}
+
+/**
+ * Defines how a default build job should look like.
+ */
+def defaultBuildJob(String branch, boolean clean) {
+    def jobName = "${branch}_build".replaceAll('/', '_')
+    def buildJob = job(jobName) {
+        description "Performs a build on branch: $branch"
+        scm {
+            github repo, branch, {
+                createTag(false)
+            }
+        }
+        triggers {
+            scm 'H/3 * * * *'
+        }
+        steps {
+            if (clean) {
+                gradle 'clean build'
+            } else {
+                gradle 'build'
+            }
+        }
+        publishers {
+            jacocoCodeCoverage {
+                execPattern '**/**.exec'
+            }
+        }
+    }
+    return buildJob
+}
