@@ -12,6 +12,12 @@ subprojects {
 
     docker {
         url = dockerUrl
+        registryCredentials {
+            url = 'yatol-docker-yatol.bintray.io'
+            username = System.getenv('YATOL_BINTRAY_USER')
+            password = System.getenv('YATOL_BINTRAY_TOKEN')
+            email = System.getenv('YATOL_BINTRAY_EMAIL')
+        }
     }
 
     task clean(type: Delete) {

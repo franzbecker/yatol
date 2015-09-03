@@ -3,25 +3,43 @@ repo = 'yatol/yatol'
 // Create jobs for static branches
 ['develop', 'master'].each { branch ->
 
-    // build job
+    // define jobs
     def buildJob = defaultBuildJob(branch, true)
+    def intTestJob = job("${branch}_integrationTestDocker")
+
+    // configure build job
     buildJob.with {
         publishers {
             publishCloneWorkspace("")
-            downstream "${branch}_integrationTestDocker"
+            downstream intTestJob.name
         }
     }
 
-    // integrationTestDocker job
-    job("${branch}_integrationTestDocker") {
+    // configure integrationTestDocker job
+    intTestJob.with {
         scm {
             cloneWorkspace(buildJob.name)
         }
         steps {
             gradle 'integrationTestDocker'
         }
+        if (branch == 'master') {
+            publishers {
+                downstream 'master_release'
+            }
+        }
     }
 
+}
+
+job('master_release') {
+    scm {
+        cloneWorkspace('master_build')
+    }
+    steps {
+        gradle 'release'
+        gradle 'pushDockerImage'
+    }
 }
 
 // Create jobs for feature branches

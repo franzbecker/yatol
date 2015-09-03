@@ -98,3 +98,15 @@ task getAppContainerIpAddress(type: DockerInspectContainer) {
         System.setProperty("appContainer.ipAddress", ipAddress)
     }
 }
+
+task tagDockerImage(type: DockerTagImage, dependsOn: buildAppImage) {
+    targetImageId { buildAppImage.getImageId() }
+    repository = 'yatol-docker-yatol.bintray.io/yatol-app'
+    tag = version
+    force = true
+}
+
+task pushDockerImage(type: DockerPushImage, dependsOn: tagDockerImage) {
+    imageName = 'yatol-docker-yatol.bintray.io/yatol-app'
+    tag = version
+}
