@@ -21,6 +21,13 @@ task copyWars(type: Copy) {
     into project.file('build/app')
 }
 
+task deployWarsToDev(type: Copy) {
+    dependsOn ':backend:war', ':frontend:war'
+    from project(':backend').file("build/libs/backend-${project.version}.war")
+    from project(':frontend').file("build/libs/frontend-${project.version}.war")
+    into project.file('build/')
+}
+
 /*
  * Create a Docker file that includes the frontend and backend wars.
  */
