@@ -2,4 +2,5 @@
 !.project
 !.classpath
 
-srx-gen
+test-editor/
+testResults/
