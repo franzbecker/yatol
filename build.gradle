@@ -14,6 +14,18 @@ allprojects {
 	tasks.withType(JavaCompile) {
 		options.warnings = false // should be handled in the IDE
 	}
+
+    // Apply jacoco to all Java projects
+	plugins.withType(JavaPlugin) {
+        project.apply plugin: 'jacoco'
+        project.jacocoTestReport {
+            reports {
+                xml.enabled = true
+                html.enabled = true
+            }
+        }
+        project.check.dependsOn jacocoTestReport
+    }
 }
 
 apply from: "$rootDir/buildSrc/release.gradle"

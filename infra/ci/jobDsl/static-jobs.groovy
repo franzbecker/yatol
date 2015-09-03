@@ -1,38 +1,34 @@
 def repo = 'yatol/yatol'
-def defaultCron = 'H/3 * * * *'
 
-job('develop_build') {
-    scm {
-        github repo, 'develop', {
-            createTag(false)
+['develop', 'master'].each { branch ->
+
+    // build job
+    job("${branch}_build") {
+        scm {
+            github repo, branch, {
+                createTag(false)
+            }
+        }
+        triggers {
+            scm 'H/3 * * * *'
+        }
+        steps {
+            gradle 'build' // TODO add 'clean'
+        }
+        publishers {
+            jacocoCodeCoverage {
+                execPattern '**/**.exec'
+            }
+            publishCloneWorkspace("")
+            downstream "${branch}_integrationTest"
         }
     }
-    triggers {
-        scm defaultCron
-    }
-    steps {
-        gradle 'clean build'
-    }
-    publishers {
-        // publishCloneWorkspace
-        downstream 'develop_integrationTest'
-    }
-}
 
-job('develop_integrationTest') {
-
-}
-
-job('master_build') {
-    scm {
-        github repo, 'master', {
-            createTag(false)
+    // integrationTestDocker job
+    job("${branch}_integrationTestDocker") {
+        steps {
+            // gradle 'clean build'
         }
     }
-    triggers {
-        scm defaultCron
-    }
-    steps {
-        gradle 'clean build'
-    }
+
 }
