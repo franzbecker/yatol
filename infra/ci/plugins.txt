@@ -4,3 +4,4 @@ git:latest
 gradle:latest
 clone-workspace-scm:latest
 parameterized-trigger:latest
+fitnesse:latest

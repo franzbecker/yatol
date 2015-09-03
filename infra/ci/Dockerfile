@@ -39,12 +39,15 @@ RUN mkdir ~/.gradle/ -p && touch ~/.gradle/gradle.properties && echo "org.gradle
 COPY jenkins_home $JENKINS_HOME
 
 # Install VirtualBox
-RUN echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /etc/apt/sources.list.d/virtualbox.list
-RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
-RUN apt-get update
-RUN apt-get install -qqy virtualbox-5.0
+#RUN echo deb http://download.virtualbox.org/virtualbox/debian vivid contrib > /etc/apt/sources.list.d/virtualbox.list
+#RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
+#RUN apt-get update
+#RUN apt-get install -qqy virtualbox-5.0
+#RUN apt-get install -qqy linux-headers-generic      # Install kernel headers
+#RUN /etc/init.d/vboxdrv setup                       # Recompile VirtualBox kernel modules
 
 # Install Vagrant
-RUN apt-get install -qqy vagrant
+#RUN curl -L  https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb -O
+#RUN dpkg --install vagrant_1.7.4_x86_64.deb
 
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]

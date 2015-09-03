@@ -6,6 +6,6 @@
 -!|script|
 |navigiere auf die Seite|http://10.0.2.2:8081/frontend/|
 |warte|1|Sekunden|
-|überprüfe ob der Text|Calling webservice |vorhanden ist|
-|überprüfe ob der Text|Hello World|vorhanden ist|
+|überprüfe ob der Text|Login |vorhanden ist|
+|überprüfe ob der Text|Register|vorhanden ist|
 |beende Browser|
