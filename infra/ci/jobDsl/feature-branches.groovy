@@ -1,6 +1,5 @@
-import groovy.json.JsonSlurper
-
 def repo = 'yatol/yatol'
+def defaultCron = 'H/3 * * * *'
 
 // Create feature branches
 def branchApi = new URL("https://api.github.com/repos/$repo/branches")
@@ -11,12 +10,15 @@ branches.findAll { it.name.startsWith('feature/') }.each { branch ->
 
     job(jobName) {
         scm {
-            github repo, branch.name, {
-                createTag(false)
+            git "https://github.com/${repo}.git", branch.name, {
+                createTag false
             }
         }
+        triggers {
+            scm defaultCron
+        }
         steps {
-            gradle('build')
+            gradle 'build'
         }
     }
 }
