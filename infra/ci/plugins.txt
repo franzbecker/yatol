@@ -7,3 +7,5 @@ clone-workspace-scm:latest
 parameterized-trigger:latest
 jacoco:latest
 fitnesse:latest
+analysis-core:latest
+checkstyle:latest
