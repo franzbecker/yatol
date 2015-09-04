@@ -10,7 +10,7 @@ repo = 'yatol/yatol'
     // configure build job
     buildJob.with {
         publishers {
-            publishCloneWorkspace("")
+            publishCloneWorkspace('', '', 'Successful', 'TAR', true, null)
             downstream intTestJob.name
         }
     }
