@@ -60,6 +60,7 @@ def defaultBuildJob(String branch, boolean clean) {
         scm {
             github repo, branch, {
                 createTag(false)
+                localBranch(${branch})
             }
         }
         triggers {
