@@ -60,7 +60,7 @@ def defaultBuildJob(String branch, boolean clean) {
         scm {
             github repo, branch, {
                 createTag(false)
-                localBranch(${branch})
+                gitCheckoutToLocalBranch(${branch})
             }
         }
         triggers {
@@ -80,4 +80,16 @@ def defaultBuildJob(String branch, boolean clean) {
         }
     }
     return buildJob
+}
+
+/**
+ * Prevents detached head state after checkout by setting the local branch name.
+ */
+def gitCheckoutToLocalBranch(branchName) {
+    { node ->
+        // checkout to local branch
+        node / 'extensions' << 'hudson.plugins.git.extensions.impl.LocalBranch' {
+            localBranch branchName
+        }
+    }
 }
