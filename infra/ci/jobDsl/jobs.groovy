@@ -62,9 +62,6 @@ def defaultBuildJob(String branch, boolean clean) {
                 createTag(false)
                 gitCheckoutToLocalBranch(${branch})
             }
-            git(
-                gitCheckoutToLocalBranch(${branch})
-            )
         }
         triggers {
             scm 'H/3 * * * *'
