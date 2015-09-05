@@ -40,8 +40,11 @@ task integrationTestDocker(type: Test) {
             ':infra:app-server:getAppContainerIpAddress'
 
     doFirst {
-        String appContainerIpAddress = System.getProperty("appContainer.ipAddress")
-        String backendUrl = "http://${appContainerIpAddress}:8080/backend/"
+	    String appContainerIpAddress = System.getProperty("appContainer.ipAddress")
+	    String backendUrl = "http://${appContainerIpAddress}:8080/backend/"
+    	if(System.getenv("YATOL_HOST")!=null) {
+    		backendUrl = "http://localhost:8081/backend/"
+        }
         logger.lifecycle("Setting BACKEND_URL to ${backendUrl}")
         jvmArgs = jvmArgs + "-DBACKEND_URL=${backendUrl}"
         println "Doing some primitive waiting for Docker + JBoss"
