@@ -1,4 +1,5 @@
 repo = 'yatol/yatol'
+githuburl = 'https://github.com/yatol/yatol.git'
 
 // Create jobs for static branches
 ['develop', 'master'].each { branch ->
@@ -58,10 +59,11 @@ def defaultBuildJob(String branch, boolean clean) {
     def buildJob = job(jobName) {
         description "Performs a build on branch: $branch"
         scm {
-            github repo, branch, {
-                createTag(false)
-                gitCheckoutToLocalBranch(${branch})
-            }
+              git (
+                  githuburl,
+                  branch,
+                  gitConfigure(branch, true)
+              )
         }
         triggers {
             scm 'H/3 * * * *'
@@ -83,13 +85,14 @@ def defaultBuildJob(String branch, boolean clean) {
 }
 
 /**
- * Prevents detached head state after checkout by setting the local branch name.
+ * Git configure section.
  */
-def gitCheckoutToLocalBranch(branchName) {
+def gitConfigure(branchName, skippingTag) {
     { node ->
         // checkout to local branch
-        node / 'extensions' << 'hudson.plugins.git.extensions.impl.LocalBranch' {
-            localBranch branchName
-        }
+        node / 'extensions' / 'hudson.plugins.git.extensions.impl.LocalBranch' / localBranch(branchName)
+
+        // checkout to local branch
+        node / 'skipTag'(skippingTag)
     }
 }
