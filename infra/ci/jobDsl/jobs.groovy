@@ -8,7 +8,7 @@ githuburl = 'https://github.com/yatol/yatol.git'
     def buildJob = defaultBuildJob(branch, true)
     def intTestJob = job("${branch}_integrationTestDocker")
     def acceptanceJobLinux = job("${branch}_acceptanceTestLinuxDocker")
-    def acceptanceJobWindows = job("${branch}_acceptanceTestLinuxDocker")
+    def acceptanceJobWindows = job("${branch}_acceptanceTestWindowsDocker")
 
     // configure build job
     buildJob.with {
