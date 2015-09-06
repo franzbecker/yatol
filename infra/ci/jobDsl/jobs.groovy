@@ -7,6 +7,7 @@ githuburl = 'https://github.com/yatol/yatol.git'
     // define jobs
     def buildJob = defaultBuildJob(branch, true)
     def intTestJob = job("${branch}_integrationTestDocker")
+    def acceptanceJobLinux = job("${branch}_acceptanceTestLinuxDocker")
 
     // configure build job
     buildJob.with {
@@ -24,12 +25,24 @@ githuburl = 'https://github.com/yatol/yatol.git'
         steps {
             gradle 'integrationTestDocker'
         }
+        publishers {
+           downstream acceptanceJobLinux.name
+        }
+    }
+
+	acceptanceJobLinux.with {
+        scm {
+            cloneWorkspace(buildJob.name)
+        }
+        steps {
+            gradle 'runAcceptanceTestLinux'
+        }
         if (branch == 'master') {
             publishers {
                 downstream 'master_release'
             }
         }
-    }
+	}
 
 }
 
