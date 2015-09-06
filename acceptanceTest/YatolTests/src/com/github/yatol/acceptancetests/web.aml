@@ -11,6 +11,10 @@ element type Text {
 	interactions = Eingabe_Wert, Pruefe_Text_Vorhanden, Leere_Wert
 }
 
+element type  Button{ 
+	interactions = Klicke_Element
+}
+
 element type service {
 	interactions = service_antwort_enthaelt
 }

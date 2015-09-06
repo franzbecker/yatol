@@ -3,8 +3,8 @@
 	<h1>Login</h1>
 
 	<form ng-submit="loginUser()">
-		Username: <input ng-model="login" /> <br />
-		<button type="submit">Login</button>
+		Username: <input ng-model="login" id="loginusername"/> <br />
+		<button type="submit" id="loginbutton">Login</button>
 	</form>
 	<div ng-show="loginError">
 		<p>Login fehlgeschlagen</p>
@@ -17,9 +17,9 @@
 	<h1>Register</h1>
 
 	<form ng-submit="registerUser()">
-		Username: <input ng-model="register" /> <br />
+		Username: <input ng-model="register" id="registerusername" /> <br />
 
-		<button type="submit">Registrieren</button>
+		<button type="submit" id="registerbutton">Registrieren</button>
 	</form>
 
 	<div ng-show="registerError">

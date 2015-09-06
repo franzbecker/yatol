@@ -22,8 +22,17 @@ component AllgemeinBrowser is BrowserCP {
 
 
 component Login is page {
-	element username is Text {
-		locator = "webid::username"
+	element LoginUsername is Text {
+		locator = "loginusername"
+	}
+	element RegisterUsername is Text {
+		locator = "Register_User" 
+	}
+	element LoginButton is Button {
+		locator = "loginbutton"
+	}
+	element RegisterButton is Button {
+		locator = "registerbutton"
 	}
 }
 

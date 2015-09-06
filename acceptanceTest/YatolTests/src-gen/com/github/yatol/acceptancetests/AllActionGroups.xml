@@ -16,13 +16,28 @@
 	</ActionGroup>
 	<ActionGroup name="Login">
 		<action technicalBindingType="Eingabe_Wert">
-			<actionName locator="webid::username">username</actionName>
+			<actionName locator="loginusername">LoginUsername</actionName>
 		</action>
 		<action technicalBindingType="Pruefe_Text_Vorhanden">
-			<actionName locator="webid::username">username</actionName>
+			<actionName locator="loginusername">LoginUsername</actionName>
 		</action>
 		<action technicalBindingType="Leere_Wert">
-			<actionName locator="webid::username">username</actionName>
+			<actionName locator="loginusername">LoginUsername</actionName>
+		</action>
+		<action technicalBindingType="Eingabe_Wert">
+			<actionName locator="Register_User">RegisterUsername</actionName>
+		</action>
+		<action technicalBindingType="Pruefe_Text_Vorhanden">
+			<actionName locator="Register_User">RegisterUsername</actionName>
+		</action>
+		<action technicalBindingType="Leere_Wert">
+			<actionName locator="Register_User">RegisterUsername</actionName>
+		</action>
+		<action technicalBindingType="Klicke_Element">
+			<actionName locator="loginbutton">LoginButton</actionName>
+		</action>
+		<action technicalBindingType="Klicke_Element">
+			<actionName locator="registerbutton">RegisterButton</actionName>
 		</action>
 	</ActionGroup>
 	<ActionGroup name="helloworldservice">
