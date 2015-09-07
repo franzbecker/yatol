@@ -13,7 +13,11 @@ githuburl = 'https://github.com/yatol/yatol.git'
     // configure build job
     buildJob.with {
         publishers {
-            publishCloneWorkspace('', '', 'Successful', 'TAR', true, null)
+            downstreamParameterized {
+                trigger(intTestJob.name) {
+                    predefinedProp('commit', '${GIT_COMMIT}')
+                }
+            }
             downstream intTestJob.name
         }
     }
@@ -21,7 +25,7 @@ githuburl = 'https://github.com/yatol/yatol.git'
     // configure integrationTestDocker job
     intTestJob.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'integrationTestDocker'
