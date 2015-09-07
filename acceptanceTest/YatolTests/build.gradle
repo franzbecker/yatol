@@ -4,7 +4,7 @@ plugins {
 
 import de.undercouch.gradle.tasks.download.Download
 
-task downloadTestEditorLinux(dependsOn: ':infra:app-server:startAppContainer', type: Download) {
+task downloadTestEditorLinux(dependsOn: [':infra:app-server:startAppContainer', ':acceptanceTest:webfixture:build'], type: Download) {
 	def file = "TestEditor-linux.gtk.x86_64.zip"
     src "https://ci.testeditor.org/job/Test-Editor-Full-CI/lastSuccessfulBuild/artifact/product/org.testeditor.product/target/products/$file"
     dest "test-editor/$file"

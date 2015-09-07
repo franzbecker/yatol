@@ -18,7 +18,6 @@ githuburl = 'https://github.com/yatol/yatol.git'
                     predefinedProp('commit', '${GIT_COMMIT}')
                 }
             }
-            downstream intTestJob.name
         }
     }
 
@@ -31,25 +30,33 @@ githuburl = 'https://github.com/yatol/yatol.git'
             gradle 'integrationTestDocker'
         }
         publishers {
-           downstream acceptanceJobLinux.name
-        }
+	        downstreamParameterized {
+	            trigger(acceptanceJobLinux.name) {
+	                predefinedProp('commit', '${GIT_COMMIT}')
+	            }
+	        }
+	    }
     }
 
 	acceptanceJobLinux.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'runAcceptanceTestLinux'
         }
         publishers {
-            downstream acceptanceJobWindows.name
-        }
+	        downstreamParameterized {
+	            trigger(acceptanceJobWindows.name) {
+	                predefinedProp('commit', '${GIT_COMMIT}')
+	            }
+	        }
+	    }
 	}
 
 	acceptanceJobWindows.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'runAcceptanceTestWindows'
