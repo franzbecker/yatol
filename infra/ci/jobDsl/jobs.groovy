@@ -13,39 +13,50 @@ githuburl = 'https://github.com/yatol/yatol.git'
     // configure build job
     buildJob.with {
         publishers {
-            publishCloneWorkspace('', '', 'Successful', 'TAR', true, null)
-            downstream intTestJob.name
+            downstreamParameterized {
+                trigger(intTestJob.name) {
+                    predefinedProp('commit', '${GIT_COMMIT}')
+                }
+            }
         }
     }
 
     // configure integrationTestDocker job
     intTestJob.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'integrationTestDocker'
         }
         publishers {
-           downstream acceptanceJobLinux.name
-        }
+	        downstreamParameterized {
+	            trigger(acceptanceJobLinux.name) {
+	                predefinedProp('commit', '${GIT_COMMIT}')
+	            }
+	        }
+	    }
     }
 
 	acceptanceJobLinux.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'runAcceptanceTestLinux'
         }
         publishers {
-            downstream acceptanceJobWindows.name
-        }
+	        downstreamParameterized {
+	            trigger(acceptanceJobWindows.name) {
+	                predefinedProp('commit', '${GIT_COMMIT}')
+	            }
+	        }
+	    }
 	}
 
 	acceptanceJobWindows.with {
         scm {
-            cloneWorkspace(buildJob.name)
+            git (githuburl, '${commit}', gitConfigure(branch, true))
         }
         steps {
             gradle 'runAcceptanceTestWindows'
