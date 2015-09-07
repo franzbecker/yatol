@@ -9,3 +9,7 @@ jacoco:latest
 fitnesse:latest
 analysis-core:latest
 checkstyle:latest
+jquery:latest
+parameterized-trigger:latest
+build-pipeline-plugin:latest
+greenballs:latest
