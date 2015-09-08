@@ -42,7 +42,18 @@ dependencies {
 }
 
 task downloadPatchedFitnesse(type: Download) {
-    src 'https://bintray.com/artifact/download/test-editor/Ressources/fitnesse.jar'
+	def userdir = System.getProperty("user.home")
+	def localFitnesseFile = new File(userdir,"/dummy/localrepo_cache/fitnesse.jar")
+	println localFitnesseFile 
+	def mysrc
+	if (localFitnesseFile.exists()){
+		mysrc = "file://$userdir/dummy/localrepo_cache/fitnesse.jar"
+	}
+	else{ 
+		mysrc = 'https://bintray.com/artifact/download/test-editor/Ressources/fitnesse.jar'
+	}
+    src  mysrc
+    println src
     dest "$buildDir/libs"
     onlyIfNewer true
 }
