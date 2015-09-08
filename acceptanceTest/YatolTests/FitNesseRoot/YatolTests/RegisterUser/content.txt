@@ -24,7 +24,6 @@ This test registers the user hugo. After that we try to register hugo a second t
 |navigiere auf die Seite|http://10.0.2.2:8081/frontend/|
 # Maske: Login
 -!|script|
-|gebe in das Feld|Register_User|den Wert|hugo|ein|
 |gebe in das Feld|loginusername|den Wert|hugo|ein|
 |klicke auf|loginbutton|
 # Maske: AllgemeinBrowser
