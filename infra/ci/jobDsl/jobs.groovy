@@ -18,6 +18,7 @@ githuburl = 'https://github.com/yatol/yatol.git'
                     predefinedProp('commit', '${GIT_COMMIT}')
                 }
             }
+            archiveJunit '**/app/**/build/test-results/*.xml'
         }
     }
 
@@ -116,6 +117,7 @@ def defaultBuildJob(String branch, boolean clean) {
             jacocoCodeCoverage {
                 execPattern '**/**.exec'
             }
+            archiveJunit '**/app/**/build/test-results/*.xml'
         }
     }
     return buildJob
