@@ -18,14 +18,13 @@ githuburl = 'https://github.com/yatol/yatol.git'
                     predefinedProp('commit', '${GIT_COMMIT}')
                 }
             }
-            archiveJunit '**/app/**/build/test-results/*.xml'
         }
     }
 
     // configure integrationTestDocker job
     intTestJob.with {
         scm {
-            git (githuburl, '${commit}', gitConfigure(branch, true))
+            git (githuburl, '${commit}', gitConfigure('${commit}', true))
         }
         steps {
             gradle 'integrationTestDocker'
@@ -36,39 +35,41 @@ githuburl = 'https://github.com/yatol/yatol.git'
 	                predefinedProp('commit', '${GIT_COMMIT}')
 	            }
 	        }
-	    }
+          archiveJunit '**/app/**/build/test-results/*.xml'
+	      }
     }
 
-	acceptanceJobLinux.with {
-        scm {
-            git (githuburl, '${commit}', gitConfigure(branch, true))
-        }
-        steps {
-            gradle 'runAcceptanceTestLinux'
-        }
-        publishers {
-	        downstreamParameterized {
-	            trigger(acceptanceJobWindows.name) {
-	                predefinedProp('commit', '${GIT_COMMIT}')
-	            }
-	        }
-	    }
-	}
+  	acceptanceJobLinux.with {
+          scm {
+              git (githuburl, '${commit}', gitConfigure('${commit}', true))
+          }
+          steps {
+              gradle 'runAcceptanceTestLinux'
+          }
+          publishers {
+  	        downstreamParameterized {
+  	            trigger(acceptanceJobWindows.name) {
+  	                predefinedProp('commit', '${GIT_COMMIT}')
+  	            }
+  	        }
+  	      }
+          configure(fitNesseConfigure('**/acceptanceTest/YatolTests/latestResult.xml'))
+    }
 
-	acceptanceJobWindows.with {
-        scm {
-            git (githuburl, '${commit}', gitConfigure(branch, true))
-        }
-        steps {
-            gradle 'runAcceptanceTestWindows'
-        }
-        if (branch == 'master') {
-            publishers {
-                downstream 'master_release'
-            }
-        }
-	}
-
+  	acceptanceJobWindows.with {
+          scm {
+              git (githuburl, '${commit}', gitConfigure('${commit}', true))
+          }
+          steps {
+              gradle 'runAcceptanceTestWindows'
+          }
+          if (branch == 'master') {
+              publishers {
+                  downstream 'master_release'
+              }
+          }
+          configure(fitNesseConfigure('**/acceptanceTest/YatolTests/latestResult.xml'))
+  	}
 }
 
 job('master_release') {
@@ -124,7 +125,7 @@ def defaultBuildJob(String branch, boolean clean) {
 }
 
 /**
- * Git configure section.
+ * Git configuration section.
  */
 def gitConfigure(branchName, skippingTag) {
     { node ->
@@ -133,5 +134,16 @@ def gitConfigure(branchName, skippingTag) {
 
         // checkout to local branch
         node / 'skipTag'(skippingTag)
+    }
+}
+
+/**
+ * FitNesse plugin configuration section.
+ */
+def fitNesseConfigure(path) {
+    { project ->
+      project / 'publishers' / 'hudson.plugins.fitnesse.FitnesseResultsRecorder' {
+        'fitnessePathToXmlResultsIn'(path)
+      }
     }
 }
