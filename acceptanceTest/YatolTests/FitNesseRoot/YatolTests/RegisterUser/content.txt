@@ -9,6 +9,11 @@ This test registers the user hugo. After that we try to register hugo a second t
 # Maske: Login
 -!|script|
 |gebe in das Feld|Register_User|den Wert|hugo|ein|
+# Maske: AllgemeinBrowser
+-!|script|
+|warte|1|Sekunden|
+# Maske: Login
+-!|script|
 |klicke auf|registerbutton|
 # Maske: AllgemeinBrowser
 -!|script|

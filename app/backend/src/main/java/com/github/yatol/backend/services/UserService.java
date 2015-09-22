@@ -35,7 +35,11 @@ public class UserService {
   public RegisterResponse registerUser(String username) {
 
     System.err.println("Paramenter name: " + username);
-
+if(username!=null){
+    if(Character.isDigit(username.charAt(0))){
+    	return new RegisterResponse(false, null);
+    }
+}
     if (getUser(username) == null) {
       User user = new User();
       user.setUsername(username);

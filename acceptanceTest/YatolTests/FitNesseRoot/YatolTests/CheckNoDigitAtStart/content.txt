@@ -1,0 +1,14 @@
+!include <YatolTests.TestSzenarien.StartBrwoser
+!|script|
+|Start Brwoser|
+#
+# Maske: AllgemeinBrowser
+-!|script|
+|navigiere auf die Seite|http://10.0.2.2:8081/frontend/|
+# Maske: Login
+-!|script|
+|gebe in das Feld|Register_User|den Wert|1panier|ein|
+# Maske: AllgemeinBrowser
+-!|script|
+|überprüfe ob der Text|fehlgeschlagen|vorhanden ist|
+|beende Browser|

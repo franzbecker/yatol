@@ -58,3 +58,6 @@ task runAcceptanceTestWindows(dependsOn: unzipTestEditorWindows, type: Exec) {
     args "-c", "java -DTESTEDITOR_HOME=${unzipTestEditorWindows.target} -jar ${unzipTestEditorWindows.target}/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar -application org.testeditor.core.headlesstestrunner -consoleLog -clean -data ${project.projectDir.parent} ExecuteTest=YatolTests.Pipeline ExecuteTestEnv=vagrant/windows"
     finalizedBy ':infra:app-server:removeAppContainer'
 }
+
+task allAcceptanceTest (dependsOn: ['runAcceptanceTestLinux', 'runAcceptanceTestWindows']){
+}
