@@ -32,3 +32,24 @@ task buildDockerImage(type: DockerBuildImage) {
     inputDir = dockerFile.parentFile
     tag = 'demo'
 }
+
+task createContainer(type: DockerCreateContainer) {
+    dependsOn buildDockerImage
+    targetImageId { buildDockerImage.getImageId() }
+    portBindings = ['8080:8080']
+    containerName = 'mydemo'
+}
+
+task startContainer(type: DockerStartContainer) {
+    dependsOn createContainer
+    targetContainerId { 'mydemo' }
+}
+
+task stopContainer(type: DockerStopContainer) {
+    targetContainerId { 'mydemo' }
+}
+
+task removeContainer(type: DockerRemoveContainer) {
+    dependsOn stopContainer
+    targetContainerId { 'mydemo' }
+}
