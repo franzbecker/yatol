@@ -16,7 +16,18 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+clean.doFirst {
+    delete project.file('docker/dist')
+}
+
+task copyDist(type: Copy) {
+    dependsOn 'installDist'
+    from project.file('build/install/playground/')
+    into project.file('docker/dist')
+}
+
 task buildDockerImage(type: DockerBuildImage) {
+    dependsOn 'copyDist'
     dockerFile = project.file('docker/Dockerfile')
     inputDir = dockerFile.parentFile
     tag = 'demo'
