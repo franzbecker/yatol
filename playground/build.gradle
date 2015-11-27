@@ -1,13 +1,23 @@
-apply plugin: 'java'
+plugins {
+  id "com.bmuschko.docker-remote-api" version "2.6.1"
+}
+
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.image.*
+
+apply plugin: 'application'
 
 repositories.jcenter()
+
+mainClassName = 'HelloWorld'
 
 dependencies {
     compile 'org.eclipse.jetty.aggregate:jetty-all:9.3.6+'
     testCompile 'junit:junit:4.12'
 }
 
-task runApp(type: JavaExec) {
-  classpath = sourceSets.main.runtimeClasspath
-  main = 'HelloWorld'
+task buildDockerImage(type: DockerBuildImage) {
+    dockerFile = project.file('docker/Dockerfile')
+    inputDir = dockerFile.parentFile
+    tag = 'demo'
 }
